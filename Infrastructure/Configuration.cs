@@ -1,6 +1,6 @@
-﻿using Infrastructure.Database.Abstractions.Picket;
-using Infrastructure.Database.Abstractions.Platform;
-using Infrastructure.Database.Abstractions.Warehouse;
+﻿using Application.Abstraction.Repositories.Picket;
+using Application.Abstraction.Repositories.Platform;
+using Application.Abstraction.Repositories.Warehouse;
 using Infrastructure.Database.Repositories.Picket;
 using Infrastructure.Database.Repositories.Platform;
 using Infrastructure.Database.Repositories.WareHouse;

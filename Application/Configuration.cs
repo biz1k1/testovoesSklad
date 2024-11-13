@@ -1,5 +1,10 @@
-﻿using Application.Service.Abstraction.Warehouse;
+﻿using Application.Service.Abstraction.Picket;
+using Application.Service.Abstraction.Platform;
+using Application.Service.Abstraction.Warehouse;
+using Application.Service.Services.Picket;
+using Application.Service.Services.Platform;
 using Application.Service.Services.Warehouse;
+using Domain.Entity.Entitys;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,7 +18,9 @@ namespace Application
 	{
 		public static IServiceCollection AddApplication(this IServiceCollection services)
 		{
-			services.AddScoped<IWarehouseService, WarehouseServices>();
+			services.AddScoped<IWarehouseService, WarehouseService>();
+			services.AddScoped<IPlatformService, PlatformService>();
+			services.AddScoped<IPicketService, PicketService>();
 
 			return services;
 		}

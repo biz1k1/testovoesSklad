@@ -1,6 +1,6 @@
 ﻿using Domain.Entity.Entitys;
 
-namespace Infrastructure.Database.Abstractions.Warehouse
+namespace Application.Abstraction.Repositories.Warehouse
 {
     /// <summary>
     /// Абстракция репозитория складов

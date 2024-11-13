@@ -1,8 +1,8 @@
-﻿using Domain.Entity.Entitys;
+﻿using Application.Abstraction.Repositories.Platform;
+using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
 using Domain.Model.Models.Input.Platform;
 using Infrastructure.Data;
-using Infrastructure.Database.Abstractions.Platform;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Repositories.Platform

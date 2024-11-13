@@ -1,12 +1,16 @@
 ﻿using Domain.Entity.Entitys;
-using Domain.Model.Models.Input;
 using Domain.Model.Models.Input.Platform;
+using Domain.Model.Models.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Infrastructure.Database.Abstractions.Platform
+namespace Application.Service.Abstraction.Platform
 {
-	public interface IPlatformRepository
+	public interface IPlatformService
 	{
-
 		/// <summary>
 		/// Метод получает все существующие площадки
 		/// </summary>
@@ -26,6 +30,5 @@ namespace Infrastructure.Database.Abstractions.Platform
 		/// <param name="platformInput">Входная модель для обновления</param>
 		/// <returns></returns>
 		Task UpdatePlatformAsync(UpdatePlatformInput platformInput);
-
 	}
 }

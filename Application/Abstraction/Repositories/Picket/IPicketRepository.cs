@@ -1,7 +1,7 @@
 ﻿using Domain.Entity.Entitys;
 using Domain.Model.Models.Input.Picket;
 
-namespace Infrastructure.Database.Abstractions.Picket
+namespace Application.Abstraction.Repositories.Picket
 {
 	public interface IPicketRepository
 	{

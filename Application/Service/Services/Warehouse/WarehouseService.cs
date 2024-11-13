@@ -1,16 +1,23 @@
-﻿using Application.Service.Abstraction.Warehouse;
+﻿using Application.Abstraction.Repositories.Warehouse;
+using Application.Service.Abstraction.Warehouse;
 using Domain.Entity.Entitys;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Services.Warehouse
 {
-	public class WarehouseServices : IWarehouseService
+	public class WarehouseService : IWarehouseService
 	{
-		private readonly IWarehouseService _warehouseRepository;
-		private readonly ILogger<WarehouseServices> _logger;
-		public WarehouseServices(
-			IWarehouseService warehouseRepository,
-			ILogger<WarehouseServices> logger)
+		private readonly IWarehouseRepository _warehouseRepository;
+		private readonly ILogger<WarehouseService> _logger;
+
+		/// <summary>
+		/// Конструктор
+		/// </summary>
+		/// <param name="warehouseRepository">Репозиторий склада</param>
+		/// <param name="logger">Логер</param>
+		public WarehouseService(
+			IWarehouseRepository warehouseRepository,
+			ILogger<WarehouseService> logger)
 		{
 			_warehouseRepository = warehouseRepository;
 			_logger = logger;

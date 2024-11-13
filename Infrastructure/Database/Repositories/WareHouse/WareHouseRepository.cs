@@ -1,6 +1,6 @@
-﻿using Domain.Entity.Entitys;
+﻿using Application.Abstraction.Repositories.Warehouse;
+using Domain.Entity.Entitys;
 using Infrastructure.Data;
-using Infrastructure.Database.Abstractions.Warehouse;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Repositories.WareHouse
@@ -8,8 +8,8 @@ namespace Infrastructure.Database.Repositories.WareHouse
     /// <summary>
     /// Класс реализует методы репозитория складов
     /// </summary>
-    internal sealed class WareHouseRepository:IWarehouseRepository
-    {
+    internal sealed class WareHouseRepository: IWarehouseRepository
+	{
         private readonly PgContext _pgContext;
 
         /// <summary>
