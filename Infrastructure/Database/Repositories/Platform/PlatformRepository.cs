@@ -1,4 +1,9 @@
-﻿using Infrastructure.Database.Abstractions.Platform;
+﻿using Domain.Entity.Entitys;
+using Domain.Model.Models.Input;
+using Domain.Model.Models.Input.Platform;
+using Infrastructure.Data;
+using Infrastructure.Database.Abstractions.Platform;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +14,58 @@ namespace Infrastructure.Database.Repositories.Platform
 {
 	internal sealed class PlatformRepository : IPlatformRepository
 	{
-		#region Публичные методы
-		public Task AddPlatformRepository(int picketId)
+		private readonly PgContext _pgContext;
+
+		/// <summary>
+		/// Конструктор
+		/// </summary>
+		/// <param name="pgContext"></param>
+		public PlatformRepository(PgContext pgContext)
 		{
-			throw new NotImplementedException();
+			_pgContext = pgContext;
 		}
 
+		#region Публичные методы
+		public async Task AddPlatformRepositoryAsync(AddPlatformInput platformInput)
+		{
+			var lastPlatformeId = _pgContext.Platforms.
+				OrderByDescending(x => x.Id)
+				.FirstOrDefault();
+
+			var newId = lastPlatformeId != null ? lastPlatformeId.Id + 1 : 1;
+
+			var wareHouse = new PlatformEntity
+			{
+				Number = newId,
+				WareHouseId = platformInput.WarehouseId,
+				Cargo = platformInput.Cargo
+			};
+
+			await _pgContext.Platforms.AddAsync(wareHouse);
+
+			await _pgContext.SaveChangesAsync();
+		}
+
+		public async Task<ICollection<PlatformEntity>> GetAllPlatformAsync()
+		{
+			var result = await _pgContext.Platforms.ToListAsync();
+
+			return result;
+		}
+
+		public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
+		{
+			var updateResult = new PlatformEntity
+			{
+				Cargo = platformInput.Cargo,
+				Id=platformInput.Id
+
+			};
+
+			_pgContext.Platforms.Update(updateResult);
+
+			await _pgContext.SaveChangesAsync();
+		}
 		#endregion
 	}
 }

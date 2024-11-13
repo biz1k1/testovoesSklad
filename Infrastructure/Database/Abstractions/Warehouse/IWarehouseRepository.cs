@@ -8,22 +8,15 @@ namespace Infrastructure.Database.Abstractions.Warehouse
     public interface IWarehouseRepository
 	{
 		/// <summary>
-		/// Метод получает конкретный склад
+		/// Метод получает все существующие склады
 		/// </summary>
-		/// <param name="warehouseId">Id склада</param>
 		/// <returns></returns>
-		Task<WareHouseEntity> GetWarehouseAsync(int warehouseId);
+		Task<ICollection<WareHouseEntity>> GetWarehouseAsync();
 
 		/// <summary>
 		/// Метод создает склад
 		/// </summary>
 		/// <returns></returns>
-		Task CreateWarehouseAsync();
-
-		/// <summary>
-		/// Метод добавляет платформы для склада
-		/// </summary>
-		/// <returns></returns>
-		Task AddPlatformWarehouseAsync();
+		Task AddWarehouseAsync();
 	}
 }

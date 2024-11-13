@@ -1,6 +1,7 @@
 ﻿using Domain.Entity.Entitys;
 using Infrastructure.Data;
 using Infrastructure.Database.Abstractions.Warehouse;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +27,7 @@ namespace Infrastructure.Database.Repositories.WareHouse
         }
 
 		#region Публичные методы
-
-        public async Task AddPlatformWarehouseAsync()
-		{
-			throw new NotImplementedException();
-		}
-
-		public async Task CreateWarehouseAsync()
+		public async Task AddWarehouseAsync()
 		{
 
 			var lastWarehouseId = _pgContext.WareHouses.
@@ -40,7 +35,7 @@ namespace Infrastructure.Database.Repositories.WareHouse
                 .FirstOrDefault();
 
 			var newId = lastWarehouseId != null ? lastWarehouseId.Id + 1 : 1;
-			var newName = $"Item_{newId}";  
+			var newName = $"Склад {newId}";  
 
 			var wareHouse = new WareHouseEntity
 			{
@@ -52,9 +47,11 @@ namespace Infrastructure.Database.Repositories.WareHouse
             await _pgContext.SaveChangesAsync();
 		}
 
-		public Task<WareHouseEntity> GetWarehouseAsync(int warehouseId)
+		public async Task<ICollection<WareHouseEntity>> GetWarehouseAsync()
 		{
-			throw new NotImplementedException();
+			var result = await _pgContext.WareHouses.ToListAsync();
+
+			return result;
 		}
 		#endregion
 	}

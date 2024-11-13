@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entity.Entitys
+﻿namespace Domain.Entity.Entitys
 {
     /// <summary>
     /// Класс сопоставляется с таблицей пикетов
