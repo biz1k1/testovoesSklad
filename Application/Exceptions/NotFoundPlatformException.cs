@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Exception
+namespace Application.Exceptions
 {
 	public class NotFoundPlatformException: InvalidOperationException
 	{

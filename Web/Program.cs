@@ -1,3 +1,5 @@
+using Application;
+using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +7,16 @@ using Microsoft.Extensions.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<PgContext>(options =>
+{
+	options.UseNpgsql(builder.Configuration.GetConnectionString("Pgsql"));
+});
+
+builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
+
 // ƒобавление свагера, потом надо удадить
 #region swagger
 
@@ -14,13 +26,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #endregion
 
-builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddDbContext<PgContext>(options =>
-{
-	options.UseNpgsql(builder.Configuration.GetConnectionString("Pgsql"));
-});
 
 var app = builder.Build();
 
