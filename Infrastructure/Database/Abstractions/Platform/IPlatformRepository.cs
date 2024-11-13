@@ -1,11 +1,6 @@
 ﻿using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
 using Domain.Model.Models.Input.Platform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Database.Abstractions.Platform
 {

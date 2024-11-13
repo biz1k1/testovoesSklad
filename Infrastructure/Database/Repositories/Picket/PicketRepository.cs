@@ -1,14 +1,8 @@
-﻿using Application.Exception;
-using Domain.Entity.Entitys;
+﻿using Domain.Entity.Entitys;
 using Domain.Model.Models.Input.Picket;
 using Infrastructure.Data;
 using Infrastructure.Database.Abstractions.Picket;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Database.Repositories.Picket
 {

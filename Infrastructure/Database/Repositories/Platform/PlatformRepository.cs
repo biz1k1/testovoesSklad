@@ -4,11 +4,6 @@ using Domain.Model.Models.Input.Platform;
 using Infrastructure.Data;
 using Infrastructure.Database.Abstractions.Platform;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Database.Repositories.Platform
 {
