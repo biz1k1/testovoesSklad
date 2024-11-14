@@ -41,7 +41,7 @@ namespace Infrastructure.Database.Repositories.Platform
 			await _pgContext.SaveChangesAsync();
 		}
 
-		public async Task<ICollection<PlatformEntity>> GetAllPlatformAsync()
+		public async Task<IEnumerable<PlatformEntity>> GetAllPlatformAsync()
 		{
 			var result = await _pgContext.Platforms.ToListAsync();
 

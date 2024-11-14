@@ -42,9 +42,9 @@ namespace Infrastructure.Database.Repositories.WareHouse
             await _pgContext.SaveChangesAsync();
 		}
 
-		public async Task<ICollection<WareHouseEntity>> GetWarehouseAsync()
+		public async Task<IEnumerable<WareHouseEntity>> GetWarehouseAsync()
 		{
-			var result = await _pgContext.WareHouses.ToListAsync();
+			var result = await _pgContext.WareHouses.Include(x=>x.Platforms).ThenInclude(x=>x.Pickets).ToListAsync();
 
 			return result;
 		}

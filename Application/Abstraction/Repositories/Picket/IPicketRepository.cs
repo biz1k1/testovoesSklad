@@ -9,7 +9,7 @@ namespace Application.Abstraction.Repositories.Picket
 		/// Метод получат все существующие пикеты
 		/// </summary>
 		/// <returns></returns>
-		Task<ICollection<PicketEntity>> GetAllPicketsAsync();
+		Task<IEnumerable<PicketEntity>> GetAllPicketsAsync();
 
 		/// <summary>
 		/// Метод создает пикет (для добавления нужен площадка)

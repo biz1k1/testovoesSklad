@@ -11,7 +11,7 @@ namespace Application.Abstraction.Repositories.Platform
 		/// Метод получает все существующие площадки
 		/// </summary>
 		/// <returns></returns>
-		Task<ICollection<PlatformEntity>> GetAllPlatformAsync();
+		Task<IEnumerable<PlatformEntity>> GetAllPlatformAsync();
 
 		/// <summary>
 		/// Метод добавляет площадку (для добавления нужен пикет)

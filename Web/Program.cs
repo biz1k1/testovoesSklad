@@ -2,9 +2,9 @@ using Application;
 using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,11 +21,24 @@ builder.Services.AddApplication();
 
 #region swagger
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+	 .AddJsonOptions(options =>
+	 {
+		 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+	 }); 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(option=>
-option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,$"{Assembly.GetExecutingAssembly().GetName().Name}.xml")));
+builder.Services.AddSwaggerGen(option =>
+{
+	var mainXmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	var mainXmlPath = Path.Combine(AppContext.BaseDirectory, mainXmlFile);
+	option.IncludeXmlComments(mainXmlPath);
+
+	// Подключаем XML документацию зависимого проекта
+	var dependentXmlFile = "Domain.xml"; // Имя XML-файла зависимого проекта
+	var dependentXmlPath = Path.Combine(AppContext.BaseDirectory, dependentXmlFile);
+	option.IncludeXmlComments(dependentXmlPath);
+});
 
 #endregion
 
@@ -37,7 +50,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseExceptionHandler("/Home/Error");
+	//app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 
 	#region swagger

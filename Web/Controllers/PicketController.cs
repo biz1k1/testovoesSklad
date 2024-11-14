@@ -30,7 +30,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route(template: "picket-lists")]
-		public async Task<ICollection<PicketEntity>> GetAllPicketsAsync()
+		public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
 		{
 			var result = await _picketService.GetAllPicketsAsync();
 
@@ -40,7 +40,7 @@ namespace Web.Controllers
 		/// <summary>
 		/// Метод создает пикет
 		/// </summary>
-		/// <param name="platformId"></param>
+		/// <param name="platformId">Id платформы, в который добавится пикет</param>
 		/// <returns></returns>
 		[HttpPost]
 		[Route(template: "picket")]
@@ -56,7 +56,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpPut]
 		[Route("platform-details")]
-		public async Task UpdatePicketsAsync(UpdatePicketInput picketInput)
+		public async Task UpdatePicketsAsync([FromQuery] UpdatePicketInput picketInput)
 		{
 			await _picketService.UpdatePicketsAsync(picketInput);
 		}

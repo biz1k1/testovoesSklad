@@ -6,7 +6,7 @@
 	public class AddPlatformInput
 	{
 		/// <summary>
-		/// Id склада, в который добавляется площадка 
+		/// Id склада, в который добавится площадка
 		/// </summary>
 		public int WarehouseId { get; set; }
 		

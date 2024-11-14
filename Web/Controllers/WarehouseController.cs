@@ -1,5 +1,6 @@
 ﻿using Application.Service.Abstraction.Warehouse;
 using Domain.Entity.Entitys;
+using Domain.Model.Models.Output.Warehouse;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -28,7 +29,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("Warehouse-list")]
-		public async Task<ICollection<WareHouseEntity>> GetWarehouseAsync()
+		public async Task<IEnumerable<WarehouseOutput>> GetWarehouseAsync()
 		{
 			var result = await _warehouseService.GetWarehouseAsync();
 

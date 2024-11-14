@@ -1,7 +1,9 @@
 ﻿using Application.Abstraction.Repositories.Warehouse;
 using Application.Exceptions;
 using Application.Service.Abstraction.Warehouse;
+using AutoMapper;
 using Domain.Entity.Entitys;
+using Domain.Model.Models.Output.Warehouse;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Services.Warehouse
@@ -10,6 +12,7 @@ namespace Application.Service.Services.Warehouse
 	{
 		private readonly IWarehouseRepository _warehouseRepository;
 		private readonly ILogger<WarehouseService> _logger;
+		private readonly IMapper _mapper;
 
 		/// <summary>
 		/// Конструктор
@@ -18,10 +21,12 @@ namespace Application.Service.Services.Warehouse
 		/// <param name="logger">Логер</param>
 		public WarehouseService(
 			IWarehouseRepository warehouseRepository,
-			ILogger<WarehouseService> logger)
+			ILogger<WarehouseService> logger,
+			IMapper mapper)
 		{
 			_warehouseRepository = warehouseRepository;
 			_logger = logger;
+			_mapper = mapper;
 		}
 		#region Публичные методы
 		public async Task AddWarehouseAsync()
@@ -37,11 +42,13 @@ namespace Application.Service.Services.Warehouse
 			}
 		}
 
-		public async Task<ICollection<WareHouseEntity>> GetWarehouseAsync()
+		public async Task<IEnumerable<WarehouseOutput>> GetWarehouseAsync()
 		{
 			try
 			{
-				var result = await _warehouseRepository.GetWarehouseAsync();
+				var warehouses = await _warehouseRepository.GetWarehouseAsync();
+
+				var result = _mapper.Map<IEnumerable<WarehouseOutput>>(warehouses);
 
 				return result;
 			}

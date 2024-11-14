@@ -22,6 +22,8 @@ namespace Application
 			services.AddScoped<IPlatformService, PlatformService>();
 			services.AddScoped<IPicketService, PicketService>();
 
+			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 			return services;
 		}
 

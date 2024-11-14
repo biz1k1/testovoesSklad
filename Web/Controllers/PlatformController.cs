@@ -3,6 +3,7 @@ using Application.Service.Abstraction.Warehouse;
 using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
 using Domain.Model.Models.Input.Platform;
+using Domain.Model.Models.Output.Platform;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -31,7 +32,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("platform-lists")]
-		public async Task<ICollection<PlatformEntity>> GetAllPlatformAsync()
+		public async Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync()
 		{
 			var result = await _platformService.GetAllPlatformAsync();
 
@@ -41,11 +42,12 @@ namespace Web.Controllers
 		/// <summary>
 		/// Метод добавляет площадку
 		/// </summary>
+		/// <param name="limit"></param>
 		/// <param name="platformInput"></param>
 		/// <returns></returns>
 		[HttpPost]
 		[Route("platform")]
-		public async Task AddPlatformRepositoryAsync(AddPlatformInput platformInput)
+		public async Task AddPlatformRepositoryAsync([FromQuery] AddPlatformInput platformInput)
 		{
 			await _platformService.AddPlatformRepositoryAsync(platformInput);
 		}
@@ -57,7 +59,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpPut]
 		[Route("platform-details")]
-		public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
+		public async Task UpdatePlatformAsync([FromQuery] UpdatePlatformInput platformInput)
 		{
 			await _platformService.UpdatePlatformAsync(platformInput);
 		}

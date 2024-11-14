@@ -25,7 +25,7 @@
         /// <summary>
         /// Склад, на которой находится платформа
         /// </summary>
-        public WareHouseEntity WareHouse { get; set; }
+        public WareHouseEntity WareHouse { get; set; } 
 
         public ICollection<PicketEntity> Pickets { get; set; } = [];
     }

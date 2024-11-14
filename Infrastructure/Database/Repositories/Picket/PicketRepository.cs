@@ -51,7 +51,7 @@ namespace Infrastructure.Database.Repositories.Picket
 			
 		}
 
-		public async Task<ICollection<PicketEntity>> GetAllPicketsAsync()
+		public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
 		{
 			var result = await _pgContext.Pickets.ToListAsync();
 

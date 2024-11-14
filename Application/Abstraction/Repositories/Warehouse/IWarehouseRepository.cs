@@ -11,7 +11,7 @@ namespace Application.Abstraction.Repositories.Warehouse
 		/// Метод получает все существующие склады
 		/// </summary>
 		/// <returns></returns>
-		Task<ICollection<WareHouseEntity>> GetWarehouseAsync();
+		Task<IEnumerable<WareHouseEntity>> GetWarehouseAsync();
 
 		/// <summary>
 		/// Метод создает склад

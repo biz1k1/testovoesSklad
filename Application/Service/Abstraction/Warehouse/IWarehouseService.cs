@@ -1,4 +1,5 @@
 ﻿using Domain.Entity.Entitys;
+using Domain.Model.Models.Output.Warehouse;
 
 namespace Application.Service.Abstraction.Warehouse
 {
@@ -8,7 +9,7 @@ namespace Application.Service.Abstraction.Warehouse
 		/// Метод получает все существующие склады
 		/// </summary>
 		/// <returns></returns>
-		Task<ICollection<WareHouseEntity>> GetWarehouseAsync();
+		Task<IEnumerable<WarehouseOutput>> GetWarehouseAsync();
 
 		/// <summary>
 		/// Метод создает склад

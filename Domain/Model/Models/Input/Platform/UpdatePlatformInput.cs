@@ -3,8 +3,11 @@
     /// <summary>
     /// Класс входной модели для обновления площадки
     /// </summary>
-    public class UpdatePlatformInput
+    public record class UpdatePlatformInput
     {
+        /// <summary>
+        /// Id платформы, у которой обновится груз
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Application.Service.Services.Picket
 			}
 		}
 
-		public async Task<ICollection<PicketEntity>> GetAllPicketsAsync()
+		public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
 		{
 			try
 			{

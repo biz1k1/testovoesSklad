@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Model.Models.Output.Platform;
 
 namespace Application.Service.Abstraction.Platform
 {
@@ -15,7 +16,7 @@ namespace Application.Service.Abstraction.Platform
 		/// Метод получает все существующие площадки
 		/// </summary>
 		/// <returns></returns>
-		Task<ICollection<PlatformEntity>> GetAllPlatformAsync();
+		Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync();
 
 		/// <summary>
 		/// Метод добавляет площадку (для добавления нужен пикет)

@@ -3,9 +3,11 @@ using Application.Exceptions;
 using Application.Service.Abstraction.Platform;
 using Application.Service.Abstraction.Warehouse;
 using Application.Service.Services.Warehouse;
+using AutoMapper;
 using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
 using Domain.Model.Models.Input.Platform;
+using Domain.Model.Models.Output.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Services.Platform
@@ -14,6 +16,7 @@ namespace Application.Service.Services.Platform
 	{
 		private readonly  IPlatformRepository _platformRepository;
 		private readonly ILogger<WarehouseService> _logger;
+		private readonly IMapper _mapper;
 		/// <summary>
 		/// Конструктор
 		/// </summary>
@@ -21,10 +24,12 @@ namespace Application.Service.Services.Platform
 		/// <param name="logger">Логер</param>
 		public PlatformService(
 			IPlatformRepository platformRepository,
-			ILogger<WarehouseService> logger)
+			ILogger<WarehouseService> logger,
+			IMapper mapper)
 		{
 			_platformRepository = platformRepository;
 			_logger = logger;
+			_mapper = mapper;
 		}
 
 		#region Публичные методы
@@ -42,11 +47,15 @@ namespace Application.Service.Services.Platform
 			}
 		}
 
-		public async Task<ICollection<PlatformEntity>> GetAllPlatformAsync()
+		public async Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync()
 		{
 			try
 			{
-				return await _platformRepository.GetAllPlatformAsync();
+				var platforms=await _platformRepository.GetAllPlatformAsync();
+
+				var result = _mapper.Map<IEnumerable<PlatformOutput>>(platforms);
+
+				return result;
 			}
 			catch (Exception ex)
 			{

@@ -19,7 +19,6 @@ namespace Domain.Model.Models.Input.Picket
 		/// <summary>
 		/// Пикет, который обновятся
 		/// </summary>
-
 		public int PicketId { get; set; }
 	}
 }
