@@ -15,6 +15,6 @@
         /// <summary>
         /// Площадки в составе склада
         /// </summary>
-        public ICollection<PlatformEntity> Platforms { get; set; }
+        public ICollection<PlatformEntity> Platforms { get; set; } = [];
     }
 }

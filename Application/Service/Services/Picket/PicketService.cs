@@ -1,15 +1,11 @@
 ﻿using Application.Abstraction.Repositories.Picket;
-using Application.Abstraction.Repositories.Platform;
 using Application.Service.Abstraction.Picket;
 using Application.Service.Services.Warehouse;
 using Domain.Entity.Entitys;
 using Domain.Model.Models.Input.Picket;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Exceptions;
+
 
 namespace Application.Service.Services.Picket
 {
@@ -41,7 +37,7 @@ namespace Application.Service.Services.Picket
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 
@@ -54,7 +50,7 @@ namespace Application.Service.Services.Picket
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 
@@ -67,7 +63,7 @@ namespace Application.Service.Services.Picket
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 		#endregion

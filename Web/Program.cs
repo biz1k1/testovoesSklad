@@ -3,6 +3,8 @@ using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +19,14 @@ builder.Services.AddDbContext<PgContext>(options =>
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 
-// Добавление свагера, потом надо удадить
 #region swagger
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(option=>
+option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,$"{Assembly.GetExecutingAssembly().GetName().Name}.xml")));
+
 #endregion
 
 
@@ -37,7 +40,6 @@ if (app.Environment.IsDevelopment())
 	app.UseExceptionHandler("/Home/Error");
 	app.UseHsts();
 
-	//также удалить
 	#region swagger
 	app.UseSwagger();
 	app.UseSwaggerUI(c =>

@@ -30,7 +30,7 @@ namespace Infrastructure.Database.Repositories.Picket
 				throw new NotFoundPlatformException(platformId);
 			}
 
-			var lastPicketId = _pgContext.WareHouses.
+			var lastPicketId = _pgContext.Pickets.
 				OrderByDescending(x => x.Id)
 				.FirstOrDefault();
 

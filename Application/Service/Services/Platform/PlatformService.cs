@@ -1,4 +1,5 @@
 ﻿using Application.Abstraction.Repositories.Platform;
+using Application.Exceptions;
 using Application.Service.Abstraction.Platform;
 using Application.Service.Abstraction.Warehouse;
 using Application.Service.Services.Warehouse;
@@ -37,7 +38,7 @@ namespace Application.Service.Services.Platform
 			{
 
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 
@@ -51,7 +52,7 @@ namespace Application.Service.Services.Platform
 			{
 
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 
@@ -65,7 +66,7 @@ namespace Application.Service.Services.Platform
 			{
 
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 		#endregion

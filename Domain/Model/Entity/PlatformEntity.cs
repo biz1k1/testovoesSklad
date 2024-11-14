@@ -27,6 +27,6 @@
         /// </summary>
         public WareHouseEntity WareHouse { get; set; }
 
-        public ICollection<PicketEntity> Pickets { get; set; }
+        public ICollection<PicketEntity> Pickets { get; set; } = [];
     }
 }

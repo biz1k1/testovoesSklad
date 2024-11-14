@@ -15,6 +15,6 @@
         /// <summary>
         /// Площадка, на которой находится пикет
         /// </summary>
-        public ICollection<PlatformEntity> Platforms { get; set; }
+        public ICollection<PlatformEntity> Platforms { get; set; } = [];
     }
 }

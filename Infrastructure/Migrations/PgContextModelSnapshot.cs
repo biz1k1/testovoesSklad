@@ -21,7 +21,7 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entity.PicketEntity", b =>
+            modelBuilder.Entity("Domain.Entity.Entitys.PicketEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Pickets", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entity.PlatformEntity", b =>
+            modelBuilder.Entity("Domain.Entity.Entitys.PlatformEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Platforms", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entity.WareHouseEntity", b =>
+            modelBuilder.Entity("Domain.Entity.Entitys.WareHouseEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,8 +69,9 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -87,9 +88,9 @@ namespace Infrastructure.Migrations
                     b.ToTable("PlatformsPickets");
                 });
 
-            modelBuilder.Entity("Domain.Entity.PlatformEntity", b =>
+            modelBuilder.Entity("Domain.Entity.Entitys.PlatformEntity", b =>
                 {
-                    b.HasOne("Domain.Entity.WareHouseEntity", "WareHouse")
+                    b.HasOne("Domain.Entity.Entitys.WareHouseEntity", "WareHouse")
                         .WithMany("Platforms")
                         .HasForeignKey("WareHouseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -100,14 +101,14 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("PlatformsPickets", b =>
                 {
-                    b.HasOne("Domain.Entity.PicketEntity", null)
+                    b.HasOne("Domain.Entity.Entitys.PicketEntity", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Picket_Id");
 
-                    b.HasOne("Domain.Entity.PlatformEntity", null)
+                    b.HasOne("Domain.Entity.Entitys.PlatformEntity", null)
                         .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -115,7 +116,7 @@ namespace Infrastructure.Migrations
                         .HasConstraintName("FK_Platform_Id");
                 });
 
-            modelBuilder.Entity("Domain.Entity.WareHouseEntity", b =>
+            modelBuilder.Entity("Domain.Entity.Entitys.WareHouseEntity", b =>
                 {
                     b.Navigation("Platforms");
                 });

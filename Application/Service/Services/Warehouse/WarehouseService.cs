@@ -1,4 +1,5 @@
 ﻿using Application.Abstraction.Repositories.Warehouse;
+using Application.Exceptions;
 using Application.Service.Abstraction.Warehouse;
 using Domain.Entity.Entitys;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace Application.Service.Services.Warehouse
 			catch(Exception ex)
 			{
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 
@@ -47,7 +48,7 @@ namespace Application.Service.Services.Warehouse
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, ex.Message);
-				throw;
+				throw new ServiceException(ex.Message);
 			}
 		}
 		#endregion
