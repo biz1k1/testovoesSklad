@@ -11,19 +11,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure
+namespace Infrastructure.Database
 {
-	public static class Configuration
-	{
-		public static IServiceCollection AddInfrastructure(this IServiceCollection services)
-		{
-			services.AddScoped<IPicketRepository, PicketRepository>();
+    public static class Configuration
+    {
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+        {
+            services.AddScoped<IPicketRepository, PicketRepository>();
 
-			services.AddScoped<IPlatformRepository, PlatformRepository>();
+            services.AddScoped<IPlatformRepository, PlatformRepository>();
 
-			services.AddScoped<IWarehouseRepository, WareHouseRepository>();
+            services.AddScoped<IWarehouseRepository, WareHouseRepository>();
 
-			return services;
-		}
-	}
+            return services;
+        }
+    }
 }
