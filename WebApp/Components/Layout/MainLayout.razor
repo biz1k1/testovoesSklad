@@ -1,0 +1,17 @@
+﻿@using Domain.Model.Models.Output.Warehouse
+@using Domain.Model.Models.Output.Platform
+@using WebApp.Components.Pages.Warehouse
+@inherits LayoutComponentBase
+@inject IHttpClientFactory ClientFactory
+
+
+<header>
+    <div class="page">
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+        <div class="WarehouseTable">
+            <WarehouseTable/>
+        </div>
+    </div>
+</header>

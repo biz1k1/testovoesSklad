@@ -1,0 +1,81 @@
+﻿@using Domain.Model.Models.Output.Warehouse
+@using Domain.Model.Models.Output.Platform
+@inherits LayoutComponentBase
+@inject IHttpClientFactory ClientFactory
+<div class="page">
+    <main>
+        <a class="table-sq">B</a>
+        <div class="WarehouseTable">
+            <div class="">
+            <RadzenDataGrid Data="@warehouses"
+                            ColumnWidth="100px"
+                            AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                            FilterMode="FilterMode.Advanced"
+                            AllowPaging="true" AllowSorting="true"
+                            PageSize="5"
+                            SelectionMode="DataGridSelectionMode.Single"
+                            AllowColumnResize="true"
+                            GridLines="DataGridGridLines.Both">
+                <Columns>
+                    <RadzenDataGridColumn Title="Номер склада" Property="@nameof(WarehouseOutput.Name)" Width="80px" TextAlign="TextAlign.Center" />
+                    <RadzenDataGridColumn Title="Номер площадки" Frozen="true" Width="80px" TextAlign="TextAlign.Center">
+                        <Template Context="warehouse">
+                            <ul>
+                                @foreach (var platform in @warehouse.Platforms)
+                                {
+                                    <b class="table-sq">@platform.Number</b>
+                                }
+                            </ul>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Номер пикета" Width="80px" TextAlign="TextAlign.Center">
+                        <Template Context="warehouse">
+                            <ul>
+                                @foreach (var platform in @warehouse.Platforms)
+                                {
+                                    @foreach (var picket in platform.Pickets)
+                                    {
+                                        <b>@picket.Number</b>
+                                    }
+                                }
+                            </ul>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center">
+                        <Template Context="warehouse">
+
+                            @foreach (var platform in @warehouse.Platforms)
+                            {
+                                <b>@platform.Cargo</b>
+                            }
+
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    private IEnumerable<WarehouseOutput>? warehouses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient httpClient = ClientFactory.CreateClient();
+        try
+        {
+            warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+        finally
+        {
+            StateHasChanged();  // Обновляем UI
+        }
+    }
+}
