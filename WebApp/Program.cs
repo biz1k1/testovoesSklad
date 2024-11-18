@@ -7,7 +7,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<Radzen.ThemeService>();
+builder.Services.AddScoped<Radzen.DialogService>();
 builder.Services.AddHttpClient();
+
 
 var app = builder.Build();
 
@@ -26,4 +28,5 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
 app.Run();

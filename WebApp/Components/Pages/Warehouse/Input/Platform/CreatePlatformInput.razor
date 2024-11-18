@@ -1,0 +1,42 @@
+﻿@using Radzen
+@using System.Text.Json
+@using Domain.Model.Models.Input.Platform
+@rendermode InteractiveServer
+
+<div class="rz-p-0 rz-p-md-12">
+
+    <RadzenTemplateForm TItem="Model" Data=@model>
+        <RadzenStack Gap="1rem" class="rz-p-sm-12">
+            <RadzenFormField Text="First Name" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox Name="FirstName" @bind-Value=@model.FirstName />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="FirstName" Text="First name is required." />
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Last Name" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox Name="LastName" @bind-Value=@model.LastName />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="LastName" Text="Last name is required." />
+                </Helper>
+            </RadzenFormField>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Submit" ></RadzenButton>
+        </RadzenStack>
+    </RadzenTemplateForm>
+</div>
+
+@code {
+    Variant variant = Variant.Outlined;
+
+    class Model
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    Model model = new Model();
+
+}

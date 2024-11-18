@@ -2,28 +2,23 @@
 @using Domain.Model.Models.Output.Platform
 @inherits LayoutComponentBase
 @inject IHttpClientFactory ClientFactory
+@rendermode InteractiveServer
+
 <div class="page">
     <main>
-        <a class="table-sq">B</a>
         <div class="WarehouseTable">
-            <div class="">
-            <RadzenDataGrid Data="@warehouses"
-                            ColumnWidth="100px"
-                            AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
-                            FilterMode="FilterMode.Advanced"
-                            AllowPaging="true" AllowSorting="true"
-                            PageSize="5"
-                            SelectionMode="DataGridSelectionMode.Single"
-                            AllowColumnResize="true"
-                            GridLines="DataGridGridLines.Both">
+            <div class="table-sizes">
+            <RadzenDataGrid Data="@warehouses"ColumnWidth="100px"AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"FilterMode="FilterMode.Advanced"
+                            AllowPaging="true"  PageSize="5" SelectionMode="DataGridSelectionMode.Single 
+                            "AllowColumnResize="true" GridLines="DataGridGridLines.Both">
                 <Columns>
                     <RadzenDataGridColumn Title="Номер склада" Property="@nameof(WarehouseOutput.Name)" Width="80px" TextAlign="TextAlign.Center" />
-                    <RadzenDataGridColumn Title="Номер площадки" Frozen="true" Width="80px" TextAlign="TextAlign.Center">
+                    <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
                         <Template Context="warehouse">
                             <ul>
                                 @foreach (var platform in @warehouse.Platforms)
                                 {
-                                    <b class="table-sq">@platform.Number</b>
+                                    <b>@platform.Number</b>
                                 }
                             </ul>
                         </Template>
@@ -60,11 +55,13 @@
 </div>
 
 @code {
+    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
     private IEnumerable<WarehouseOutput>? warehouses;
+
 
     protected override async Task OnInitializedAsync()
     {
-        HttpClient httpClient = ClientFactory.CreateClient();
+        var httpClient = HttpClientFactory.CreateClient();
         try
         {
             warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");

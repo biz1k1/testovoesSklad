@@ -1,17 +1,27 @@
 ﻿@using Domain.Model.Models.Output.Warehouse
 @using Domain.Model.Models.Output.Platform
-@using WebApp.Components.Pages.Warehouse
+@using WebApp.Components.Pages.Warehouse.Table
+@using WebApp.Components.Pages.Warehouse.Input.Warehouse
+@using WebApp.Components.Pages.Warehouse.Input.Platform
 @inherits LayoutComponentBase
-@inject IHttpClientFactory ClientFactory
 
-
-<header>
+<RadzenComponent @rendermode="InteractiveServer"/>
+<main>
     <div class="page">
+
         <div class="sidebar">
             <NavMenu />
         </div>
+
         <div class="WarehouseTable">
             <WarehouseTable/>
+            <div class="CreateWarehouseInput">
+                <CreateWarehouseInput/>
+            </div>
+            <div class="CreatePlatformInput">
+                <CreatePlatformInput/>
+            </div>
         </div>
+
     </div>
-</header>
+</main>

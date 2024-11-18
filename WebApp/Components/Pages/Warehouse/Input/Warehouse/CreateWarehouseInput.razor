@@ -1,0 +1,36 @@
+﻿@rendermode InteractiveServer
+@inject IHttpClientFactory ClientFactory
+@inject DialogService DialogService
+<div>
+    <div class="page">
+        <main>
+            <div class="CreateWarehouseInput">
+                <div class="buttonCreate">
+                    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap" >
+                        <RadzenButton ButtonType="ButtonType.Submit" Click="OnClick" Text="Добавить склад" ButtonStyle="ButtonStyle.Primary" Disabled="false"/>
+                    </RadzenStack>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+@code {
+    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
+
+    private async Task OnClick()
+    {
+        var httpClient = HttpClientFactory.CreateClient();
+
+        try
+        {
+            await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse",null);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}
