@@ -3,7 +3,11 @@
 @inherits LayoutComponentBase
 @inject IHttpClientFactory ClientFactory
 @rendermode InteractiveServer
+@inject DialogService DialogService
 
+
+@using Model;
+@using WebApp.Components.Pages.Warehouse.Input.Platform
 <div class="page">
     <main>
         <div class="WarehouseTable">
@@ -46,6 +50,11 @@
 
                         </Template>
                     </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Действие" Width="80px" TextAlign="TextAlign.Center">
+                        <Template Context="data">
+                                <RadzenButton Click="@(args => EditPlatformDialog(data))">Edit</RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
                 </Columns>
             </RadzenDataGrid>
             </div>
@@ -74,5 +83,11 @@
         {
             StateHasChanged();  // Обновляем UI
         }
+    }
+    private async Task EditPlatformDialog(WarehouseOutput warehouseOutput)
+    {
+        var parametrs = new Dictionary<string, object>() { { "warehouseOutput", warehouseOutput } };
+        var options = new Radzen.DialogOptions() { Width = "700px", Height = "450px" };
+        await DialogService.OpenAsync<EditDialog>("Edit platform",parametrs,options);
     }
 }
