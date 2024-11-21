@@ -1,0 +1,34 @@
+﻿@using Web.Components.Pages.Input.Dialog
+@using Domain.Model.Models.Input
+@using Domain.Model.Models.Output
+@inject IHttpClientFactory ClientFactory
+@inject DialogService DialogService
+@rendermode InteractiveAuto
+<div>
+    <div class="page">
+        <main>
+            <div class="CreateWarehouseInput">
+                <div class="buttonCreate">
+                    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
+                        <RadzenButton ButtonType="ButtonType.Submit" Click="EditPlatformDialog" Text="Добавить платформу" ButtonStyle="ButtonStyle.Primary" Disabled="false" />
+                    </RadzenStack>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public IEnumerable<PlatformOutput>? Platforms { get; set; }
+
+    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
+
+    private async Task EditPlatformDialog()
+    {
+        var parametrs = new Dictionary<string, object>() { { "Platforms", Platforms } };
+        var options = new Radzen.DialogOptions() { Width = "350px", Height = "350px" };
+        await DialogService.OpenAsync<PlatformCreateDialog>("Добавление платформы", parametrs, options);
+    }
+}

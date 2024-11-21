@@ -28,14 +28,14 @@ namespace Infrastructure.Database.Repositories.Platform
 
 			var newId = lastPlatformeId != null ? lastPlatformeId.Id + 1 : 1;
 
-			var wareHouse = new PlatformEntity
+			var platform = new PlatformEntity
 			{
 				Number = newId,
 				WareHouseId = platformInput.WarehouseId,
 				Cargo = platformInput.Cargo
 			};
 
-			await _pgContext.Platforms.AddAsync(wareHouse);
+			await _pgContext.Platforms.AddAsync(platform);
 
 			await _pgContext.SaveChangesAsync();
 		}

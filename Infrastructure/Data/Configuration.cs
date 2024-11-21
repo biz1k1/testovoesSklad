@@ -53,22 +53,9 @@ namespace Infrastructure.Data
 			builder.Property(x => x.Number)
 				.IsRequired();
 
-			builder.HasMany(x=>x.Platforms)
-				.WithMany(x=>x.Pickets)
-				.UsingEntity<Dictionary<string, object>>(
-				"PlatformsPickets", // Имя промежуточной таблицы
-				j => j
-					.HasOne<PlatformEntity>()
-					.WithMany()
-					.HasForeignKey("Id")
-					.HasConstraintName("FK_Platform_Id")
-					.OnDelete(DeleteBehavior.Cascade),
-				j => j
-					.HasOne<PicketEntity>()
-					.WithMany()
-					.HasForeignKey("Id")
-					.HasConstraintName("FK_Picket_Id")
-					.OnDelete(DeleteBehavior.Cascade));
+			builder.HasMany(x => x.Platforms)
+				.WithMany(x => x.Pickets)
+				.UsingEntity("PlatformsPickets");
 		}
 	}
 }

@@ -44,7 +44,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route(template: "picket")]
-		public async Task AddPicketAsync([FromQuery] int platformId)
+		public async Task AddPicketAsync(int platformId)
 		{
 			await _picketService.AddPicketAsync(platformId);
 		}

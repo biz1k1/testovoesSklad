@@ -44,8 +44,11 @@ namespace Infrastructure.Database.Repositories.Picket
 
 			await _pgContext.Pickets.AddAsync(newPicket);
 
+
 			// Присваивание пикета к площадке
 			platform.Pickets.Add(newPicket);
+
+			newPicket.Platforms.Add(platform);
 
 			await _pgContext.SaveChangesAsync();
 			
