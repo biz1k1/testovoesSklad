@@ -39,7 +39,6 @@ namespace Web.Controllers
         /// <summary>
         /// Метод добавляет площадку
         /// </summary>
-        /// <param name="limit"></param>
         /// <param name="platformInput"></param>
         /// <returns></returns>
         [HttpPost]
