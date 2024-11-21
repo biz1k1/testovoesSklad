@@ -1,7 +1,7 @@
 ﻿using Application.Abstraction.Repositories.Picket;
 using Application.Exceptions;
 using Domain.Entity.Entitys;
-using Domain.Model.Models.Input.Picket;
+using Domain.Model.Models.Input;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

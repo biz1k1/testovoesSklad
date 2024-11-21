@@ -1,13 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entity.Entitys;
-using Domain.Model.Models.Output.Picket;
-using Domain.Model.Models.Output.Platform;
-using Domain.Model.Models.Output.Warehouse;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Model.Models.Output;
 
 namespace Application.Mapping
 {

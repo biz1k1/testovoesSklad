@@ -1,6 +1,5 @@
 ﻿using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
-using Domain.Model.Models.Input.Platform;
 
 namespace Application.Abstraction.Repositories.Platform
 {

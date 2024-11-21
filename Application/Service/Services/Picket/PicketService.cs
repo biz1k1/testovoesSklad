@@ -2,7 +2,7 @@
 using Application.Service.Abstraction.Picket;
 using Application.Service.Services.Warehouse;
 using Domain.Entity.Entitys;
-using Domain.Model.Models.Input.Picket;
+using Domain.Model.Models.Input;
 using Microsoft.Extensions.Logging;
 using Application.Exceptions;
 

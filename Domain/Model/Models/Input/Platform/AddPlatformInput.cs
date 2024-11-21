@@ -1,4 +1,4 @@
-﻿namespace Domain.Model.Models.Input.Platform
+﻿namespace Domain.Model.Models.Input
 {
 	/// <summary>
 	/// Входная модель для добавления площадки

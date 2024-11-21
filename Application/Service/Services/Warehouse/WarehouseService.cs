@@ -2,8 +2,7 @@
 using Application.Exceptions;
 using Application.Service.Abstraction.Warehouse;
 using AutoMapper;
-using Domain.Entity.Entitys;
-using Domain.Model.Models.Output.Warehouse;
+using Domain.Model.Models.Output;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Services.Warehouse

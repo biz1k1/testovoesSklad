@@ -1,25 +1,25 @@
 ﻿@rendermode InteractiveAuto
-@using Domain.Model.Models.Input.Platform
-@using Domain.Model.Models.Output.Warehouse
+@using Domain.Model.Models.Input
+@using Domain.Model.Models.Output
 @using Model
 @inject DialogService DialogService
 
 <main>
 
 <div class="buttonCreate">
-        <EditForm Model="@model" OnSubmit="UpdatePlatform" >
+      @*   <EditForm Model="warehouseOutput" OnSubmit="UpdatePlatform" >
 
 
         <RadzenButton ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
         <RadzenButton ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
-    </EditForm>
+    </EditForm> *@
 </div>
 </main>
 
 @code {
     [Parameter]
     public WarehouseOutput warehouseOutput { get; set; } = new();
-    private UpdateWarehouseModel model { get; set; } = new();
+
 
     [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
     private async Task UpdatePlatform()
@@ -28,7 +28,7 @@
 
         try
         {
-            await httpClient.PostAsync("https://localhost:7294/Platform/platform", null);
+            await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse", null);
             StateHasChanged();
         }
         catch (Exception ex)

@@ -1,10 +1,5 @@
 ﻿using Domain.Entity.Entitys;
-using Domain.Model.Models.Input.Picket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Model.Models.Input;
 
 namespace Application.Service.Abstraction.Picket
 {

@@ -1,5 +1,5 @@
 ﻿using Domain.Entity.Entitys;
-using Domain.Model.Models.Input.Picket;
+using Domain.Model.Models.Input;
 
 namespace Application.Abstraction.Repositories.Picket
 {

@@ -1,13 +1,10 @@
 ﻿using Application.Abstraction.Repositories.Platform;
 using Application.Exceptions;
 using Application.Service.Abstraction.Platform;
-using Application.Service.Abstraction.Warehouse;
 using Application.Service.Services.Warehouse;
 using AutoMapper;
-using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
-using Domain.Model.Models.Input.Platform;
-using Domain.Model.Models.Output.Platform;
+using Domain.Model.Models.Output;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Services.Platform

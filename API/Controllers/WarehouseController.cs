@@ -1,6 +1,5 @@
 ﻿using Application.Service.Abstraction.Warehouse;
-using Domain.Entity.Entitys;
-using Domain.Model.Models.Output.Warehouse;
+using Domain.Model.Models.Output;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers

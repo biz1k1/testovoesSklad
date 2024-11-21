@@ -1,13 +1,11 @@
 ﻿@rendermode InteractiveServer
-@using Domain.Model.Models.Output.Warehouse
-@using Domain.Model.Models.Output.Platform
-@using Domain.Model.Models.Output.Picket
+@using Domain.Model.Models.Output
 @inherits LayoutComponentBase
 @inject IHttpClientFactory ClientFactory
 @inject DialogService DialogService
 @using Model;
 @using Web.Components.Pages.Input
-
+@using Web.Components.Pages.Input.Dialog
 <div class="page">
     <main>
         <div class="WarehouseTable">
@@ -62,24 +60,22 @@
 </div>
 
 @code {
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
-
-    private IEnumerable<WarehouseOutput>? warehouses;
     private IEnumerable<PlatformOutput>? platforms;
-    private IEnumerable<string>? wareh;
     private IEnumerable<PicketOutput>? pickets;
+    private IEnumerable<string> com;
+    string value = "Around the Horn";
 
+    [Parameter]
+    public IEnumerable<WarehouseOutput>? warehouses{ get; set;}
 
 
     protected override async Task OnInitializedAsync()
     {
-        var httpClient = HttpClientFactory.CreateClient();
         try
         {
-            warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
             platforms = warehouses.SelectMany(x => x.Platforms);
-            wareh = warehouses.Select(x => x.Name).Distinct();
             pickets = platforms.SelectMany(x => x.Pickets);
+            com = warehouses.Select(x => x.Name);
         }
         catch (Exception ex)
         {
@@ -87,14 +83,15 @@
         }
         finally
         {
-            StateHasChanged();  // Обновляем UI
+            StateHasChanged(); 
         }
     }
     private async Task EditPlatformDialog(WarehouseOutput warehouseOutput)
     {
         var parametrs = new Dictionary<string, object>() { { "warehouseOutput", warehouseOutput } };
         var options = new Radzen.DialogOptions() { Width = "700px", Height = "450px" };
-        await DialogService.OpenAsync<EditDialog>("Edit platform", parametrs, options);
+        await DialogService.OpenAsync<WarehouseEditDialog>("Edit platform", parametrs, options);
     }
+  
 
 }

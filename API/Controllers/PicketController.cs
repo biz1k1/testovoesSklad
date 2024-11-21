@@ -1,8 +1,8 @@
 ﻿using Application.Service.Abstraction.Picket;
-using Application.Service.Abstraction.Platform;
 using Domain.Entity.Entitys;
-using Domain.Model.Models.Input.Picket;
+using Domain.Model.Models.Input;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Web.Controllers
 {
@@ -44,7 +44,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route(template: "picket")]
-		public async Task AddPicketAsync(int platformId)
+		public async Task AddPicketAsync([FromQuery] int platformId)
 		{
 			await _picketService.AddPicketAsync(platformId);
 		}
@@ -56,7 +56,7 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpPut]
 		[Route("platform-details")]
-		public async Task UpdatePicketsAsync([FromQuery] UpdatePicketInput picketInput)
+		public async Task UpdatePicketsAsync([FromBody] UpdatePicketInput picketInput)
 		{
 			await _picketService.UpdatePicketsAsync(picketInput);
 		}

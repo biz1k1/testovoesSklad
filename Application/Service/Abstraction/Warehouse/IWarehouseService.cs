@@ -1,5 +1,4 @@
-﻿using Domain.Entity.Entitys;
-using Domain.Model.Models.Output.Warehouse;
+﻿using Domain.Model.Models.Output;
 
 namespace Application.Service.Abstraction.Warehouse
 {

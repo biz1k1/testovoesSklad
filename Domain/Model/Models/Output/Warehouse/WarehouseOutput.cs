@@ -1,18 +1,13 @@
-﻿using Domain.Entity.Entitys;
-using Domain.Model.Models.Output.Platform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace Domain.Model.Models.Output.Warehouse
+namespace Domain.Model.Models.Output
 {
 	/// <summary>
 	/// Клас выходной модели для складов
 	/// </summary>
 	public record class WarehouseOutput
 	{
+		public int Id { get; set; }
 		/// <summary>
 		/// Номер склада
 		/// </summary>
@@ -21,6 +16,6 @@ namespace Domain.Model.Models.Output.Warehouse
 		/// <summary>
 		/// Площадки в составе склада
 		/// </summary>
-		public ICollection<PlatformOutput> Platforms { get; set; } = [];
+		public IEnumerable<PlatformOutput> Platforms { get; set; } = [];
 	}
 }

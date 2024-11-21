@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Model.Models.Input.Picket
+﻿
+namespace Domain.Model.Models.Input
 {
 	/// <summary>
 	/// Входная модель для обновления пикетов
