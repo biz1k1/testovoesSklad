@@ -3,25 +3,31 @@
 @using Domain.Model.Models.Output
 @inject IHttpClientFactory ClientFactory
 @page "/"
+@using Web.Services
+@inject StateMessageService StateMessageService
 
 @layout Web.Components.Layout.MainLayout
 
-<WarehouseTable warehouses="@warehouses"></WarehouseTable>
-<CreateWarehouseInput></CreateWarehouseInput>
-<CreatePlatformInput warehouses="@warehouses"></CreatePlatformInput>
+<WarehouseTable />
+<CreateWarehouseButton/>
+<CreatePlatformButton warehouses="@warehouses"/>
+<CreatePicketButton Platforms="platforms"/>
 
-@code{
+    @code{
+
     private IEnumerable<WarehouseOutput>? warehouses;
     private IEnumerable<PlatformOutput>? platforms;
-    private IEnumerable<PicketOutput>? pickets;
 
     [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
     protected override async Task OnInitializedAsync()
     {
+
         var httpClient = HttpClientFactory.CreateClient();
         try
         {
             warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
+            //StateMessageService.OnDataChanged += StateHasChanged;
+            platforms = warehouses.SelectMany(x=>x.Platforms).ToList();
         }
         catch (Exception ex)
         {

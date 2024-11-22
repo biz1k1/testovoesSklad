@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using Domain.Model.Models.Output
-
+@using Web.Services
+@inject StateMessageService StateMessageService
 <header>
     <RadzenComponents @rendermode="InteractiveAuto" />
 </header>
@@ -27,3 +28,13 @@
     <a class="dismiss">🗙</a>
 </div>
 
+@code{
+    protected override void OnInitialized()
+    {
+        if(StateMessageService is not null)
+        {
+            StateMessageService.OnChange += async () => await InvokeAsync(StateHasChanged);
+            
+        }
+    }
+}

@@ -1,6 +1,6 @@
 using Radzen;
 using Web.Components;
-using Web.Components.Layout;
+using Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,9 @@ builder.Services.AddScoped<ThemeService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<ContextMenuService>();
 builder.Services.AddScoped<TooltipService>();
+builder.Services.AddScoped<FlattenTreeService>();
+builder.Services.AddSingleton<StateMessageService>();
+
 
 var app = builder.Build();
 

@@ -1,50 +1,48 @@
 ﻿@rendermode InteractiveServer
 @using Domain.Model.Models.Output
 @inherits LayoutComponentBase
-@inject IHttpClientFactory ClientFactory
-@inject DialogService DialogService
 @using Model;
 @using Web.Components.Pages.Input
 @using Web.Components.Pages.Input.Dialog
+@using Web.Services
+
+
+@inject IHttpClientFactory ClientFactory
+@inject DialogService DialogService
+
 <div class="page">
     <main>
         <div class="WarehouseTable">
             <div class="table-sizes">
-                <RadzenDataGrid Data="@warehouses" ColumnWidth="100px" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced"
+                <RadzenDataGrid Data="@tableRow" ColumnWidth="100px" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced"
                                 AllowPaging="true" PageSize="5" SelectionMode="DataGridSelectionMode.Single
                             " AllowColumnResize="true" GridLines="DataGridGridLines.Both">
                     <Columns>
-                        <RadzenDataGridColumn Title="Номер склада" Property="@nameof(WarehouseOutput.Name)" Width="80px" TextAlign="TextAlign.Center" />
+                        <RadzenDataGridColumn Title="Номер склада" Width="80px" TextAlign="TextAlign.Center" >
+                            <Template Context="warehouse">
+                                <ul>
+                                    @warehouse.WarehouseName
+                                </ul>
+                            </Template>
+                        </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
                                 <ul>
-                                    @foreach (var platform in @warehouse.Platforms)
-                                    {
-                                        <b>@platform.Number</b>
-                                    }
+                                    @warehouse.PlatformNumber
                                 </ul>
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Номер пикета" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
                                 <ul>
-                                    @foreach (var platform in @warehouse.Platforms)
-                                    {
-                                        @foreach (var picket in platform.Pickets)
-                                        {
-                                            <b>@picket.Number</b>
-                                        }
-                                    }
+                                    @warehouse.PicketNumber
                                 </ul>
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
 
-                                @foreach (var platform in @warehouse.Platforms)
-                                {
-                                    <b>@platform.Cargo</b>
-                                }
+                                @warehouse.PlatformCargo
 
                             </Template>
                         </RadzenDataGridColumn>
@@ -60,38 +58,53 @@
 </div>
 
 @code {
-    private IEnumerable<PlatformOutput>? platforms;
-    private IEnumerable<PicketOutput>? pickets;
-    private IEnumerable<string> com;
-    string value = "Around the Horn";
+    [Inject] FlattenTreeService flattenTreeService { get; set; } = new();
 
-    [Parameter]
-    public IEnumerable<WarehouseOutput>? warehouses{ get; set;}
+    //[Parameter]
+    public IEnumerable<WarehouseOutput>? Warehouses{ get; set;}
+
+    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
+    public List<TableRow> tableRow {get;set;}
 
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            platforms = warehouses.SelectMany(x => x.Platforms);
-            pickets = platforms.SelectMany(x => x.Pickets);
-            com = warehouses.Select(x => x.Name);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-        finally
-        {
-            StateHasChanged(); 
-        }
+
+        var httpClient = HttpClientFactory.CreateClient();
+        Warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
+        @inject StateMessageService StateMessageService
+        //StateMessageService.OnChange += HandleStateChange;
+
+        StateHasChanged();
+        tableRow = flattenTreeService.FlattenTree(Warehouses);
+
     }
+    private async Task HandleStateChange()
+    {
+        var httpClient = HttpClientFactory.CreateClient();
+        Warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
+        await InvokeAsync(StateHasChanged); // Обновление интерфейса асинхронно
+    }
+
     private async Task EditPlatformDialog(WarehouseOutput warehouseOutput)
     {
         var parametrs = new Dictionary<string, object>() { { "warehouseOutput", warehouseOutput } };
         var options = new Radzen.DialogOptions() { Width = "700px", Height = "450px" };
         await DialogService.OpenAsync<WarehouseEditDialog>("Edit platform", parametrs, options);
     }
-  
 
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Warehouses is null)
+        {
+            // Ожидание пока параметр не будет задан
+            while (Warehouses is null)
+            {
+                await Task.Delay(100); // Задержка между проверками
+            }
+        }
+
+        // Здесь параметр уже загружен
+        await base.OnParametersSetAsync();
+    }
 }
