@@ -9,6 +9,7 @@
 
 @inject IHttpClientFactory ClientFactory
 @inject DialogService DialogService
+@inject FlattenTreeService FlattenTreeService
 
 <div class="page">
     <main>
@@ -58,32 +59,17 @@
 </div>
 
 @code {
-    [Inject] FlattenTreeService flattenTreeService { get; set; } = new();
-
-    //[Parameter]
+    [Parameter]
     public IEnumerable<WarehouseOutput>? Warehouses{ get; set;}
 
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
     public List<TableRow> tableRow {get;set;}
 
 
     protected override async Task OnInitializedAsync()
     {
 
-        var httpClient = HttpClientFactory.CreateClient();
-        Warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
-        @inject StateMessageService StateMessageService
-        //StateMessageService.OnChange += HandleStateChange;
+        tableRow = FlattenTreeService.FlattenTree(Warehouses);
 
-        StateHasChanged();
-        tableRow = flattenTreeService.FlattenTree(Warehouses);
-
-    }
-    private async Task HandleStateChange()
-    {
-        var httpClient = HttpClientFactory.CreateClient();
-        Warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
-        await InvokeAsync(StateHasChanged); // Обновление интерфейса асинхронно
     }
 
     private async Task EditPlatformDialog(WarehouseOutput warehouseOutput)
@@ -100,11 +86,10 @@
             // Ожидание пока параметр не будет задан
             while (Warehouses is null)
             {
-                await Task.Delay(100); // Задержка между проверками
+                await Task.Delay(100); 
             }
         }
 
-        // Здесь параметр уже загружен
         await base.OnParametersSetAsync();
     }
 }

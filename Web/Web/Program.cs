@@ -19,6 +19,10 @@ builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<ContextMenuService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<FlattenTreeService>();
+builder.Services.AddScoped<WarehouseService>();
+builder.Services.AddScoped<PlatformService>();
+builder.Services.AddScoped<PicketService>();
+
 builder.Services.AddSingleton<StateMessageService>();
 
 

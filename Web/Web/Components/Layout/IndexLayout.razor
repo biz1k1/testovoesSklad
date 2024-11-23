@@ -1,41 +1,35 @@
-﻿@using Web.Components.Pages.Table
+﻿@page "/"
+@using Web.Components.Pages.Table
 @using Web.Components.Pages.Input.Button
 @using Domain.Model.Models.Output
-@inject IHttpClientFactory ClientFactory
-@page "/"
 @using Web.Services
-@inject StateMessageService StateMessageService
 
+@inject WarehouseService WarehouseService
+@inject PlatformService PlatformService
 @layout Web.Components.Layout.MainLayout
 
-<WarehouseTable />
+<WarehouseTable Warehouses="warehouses" />
 <CreateWarehouseButton/>
 <CreatePlatformButton warehouses="@warehouses"/>
 <CreatePicketButton Platforms="platforms"/>
 
-    @code{
+@code{
 
     private IEnumerable<WarehouseOutput>? warehouses;
     private IEnumerable<PlatformOutput>? platforms;
 
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
     protected override async Task OnInitializedAsync()
     {
 
-        var httpClient = HttpClientFactory.CreateClient();
         try
         {
-            warehouses = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
-            //StateMessageService.OnDataChanged += StateHasChanged;
-            platforms = warehouses.SelectMany(x=>x.Platforms).ToList();
+            warehouses = await WarehouseService.GetWarehousesAsync();
+
+            platforms = await PlatformService.GetPlatformAsync();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
-        }
-        finally
-        {
-            
         }
     }
 }

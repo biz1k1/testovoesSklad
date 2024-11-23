@@ -4,17 +4,20 @@
 @using Model
 @using System.Text.Json
 @using System.Text
+@using Web.Services
+
+@inject PicketService PicketService
 @inject DialogService DialogService
 
 <main>
 
     <div>
-        <EditForm FormName="Добавление платформы" Model="@platformNumber" OnSubmit="UpdatePlatform">
+        <EditForm FormName="Добавление пикета" Model="@platformNumber" OnSubmit="UpdatePlatform">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-group">
-                <label>Выберите склад, который привяжется к площадке:</label>
+                <label>Выберите платформу, который привяжется пикет:</label>
                 <RadzenDropDown @bind-Value="platformNumber" Data="Platforms.Select(x=>x.Number)" Style="width: 100%;" />
             </div>
 
@@ -29,25 +32,12 @@
     public IEnumerable<PlatformOutput>? Platforms { get; set; }
     private int platformNumber;
 
-
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
-
     private async Task UpdatePlatform()
     {
-        var httpClient = HttpClientFactory.CreateClient();
 
         var platform = Platforms.Where(x => x.Number ==platformNumber).FirstOrDefault();
 
-        try
-        {
-
-            await httpClient.PostAsync($"https://localhost:7294/Picket/picket?platformId={platform.Id}", null);
-            StateHasChanged();
-        }   
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
+        await PicketService.AddPicket(platform.Id);
     }
     private void CloseDialog()
     {

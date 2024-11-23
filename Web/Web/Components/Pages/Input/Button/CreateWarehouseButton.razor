@@ -1,6 +1,7 @@
-﻿@using Web.Services
-@inject StateMessageService StateMessageService
-@rendermode InteractiveServer
+﻿@rendermode InteractiveServer
+@using Web.Services
+
+@inject WarehouseService WarehouseService
 
 <div>
     <div class="page">
@@ -18,17 +19,12 @@
 </div>
 
 @code {
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
 
     private async Task OnClick()
     {
-        var httpClient = HttpClientFactory.CreateClient();
-
         try
         {
-            //await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse", null);
-
-            await StateMessageService.NotifyStateChangedAsync();
+            await WarehouseService.AddWarehouse();
         }
         catch (Exception ex)
         {

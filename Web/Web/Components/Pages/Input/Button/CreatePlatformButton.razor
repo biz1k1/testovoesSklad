@@ -1,8 +1,10 @@
-﻿@using Web.Components.Pages.Input.Dialog
+﻿@rendermode InteractiveAuto
+@using Web.Components.Pages.Input.Dialog
 @using Domain.Model.Models.Input
 @using Domain.Model.Models.Output
+
 @inject DialogService DialogService
-@rendermode InteractiveAuto
+
 <div>
     <div class="page">
         <main>
@@ -21,8 +23,6 @@
 @code {
     [Parameter]
     public IEnumerable<WarehouseOutput>? warehouses { get; set; }
-
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
 
     private async Task EditPlatformDialog()
     {

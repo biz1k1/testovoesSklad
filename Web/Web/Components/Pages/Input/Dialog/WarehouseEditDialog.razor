@@ -2,6 +2,7 @@
 @using Domain.Model.Models.Input
 @using Domain.Model.Models.Output
 @using Model
+
 @inject DialogService DialogService
 
 <main>
@@ -21,15 +22,12 @@
     public WarehouseOutput warehouseOutput { get; set; } = new();
 
 
-    [Inject] private IHttpClientFactory HttpClientFactory { get; set; } = default!;
     private async Task UpdatePlatform()
     {
-        var httpClient = HttpClientFactory.CreateClient();
 
         try
         {
-            await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse", null);
-            StateHasChanged();
+            
         }
         catch (Exception ex)
         {
