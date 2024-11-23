@@ -29,8 +29,10 @@ namespace Application.Service.Services.Platform
 			_mapper = mapper;
 		}
 
-		#region Публичные методы
-		public async Task AddPlatformRepositoryAsync(AddPlatformInput platformInput)
+        #region Публичные методы
+
+        /// <inheritdoc />
+        public async Task AddPlatformRepositoryAsync(AddPlatformInput platformInput)
 		{
 			try
 			{
@@ -44,7 +46,8 @@ namespace Application.Service.Services.Platform
 			}
 		}
 
-		public async Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync()
 		{
 			try
 			{
@@ -62,7 +65,8 @@ namespace Application.Service.Services.Platform
 			}
 		}
 
-		public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
+        /// <inheritdoc />
+        public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
 		{
 			try
 			{
@@ -75,6 +79,22 @@ namespace Application.Service.Services.Platform
 				throw new ServiceException(ex.Message);
 			}
 		}
-		#endregion
-	}
+
+        /// <inheritdoc />
+        public async Task<bool> DeletePlatformAsync(int warehouseId)
+        {
+            try
+            {
+                var result = await _platformRepository.DeletePlatformAsync(warehouseId);
+
+				return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw new ServiceException(ex.Message);
+            }
+        }
+        #endregion
+    }
 }

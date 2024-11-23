@@ -24,5 +24,13 @@ namespace Application.Service.Abstraction.Platform
 		/// <param name="platformInput">Входная модель для обновления</param>
 		/// <returns></returns>
 		Task UpdatePlatformAsync(UpdatePlatformInput platformInput);
-	}
+
+		/// <summary>
+		/// Метод удаляет площадку
+		/// </summary>
+		/// <param name="warehouseId">Айди площадки</param>
+		/// <returns></returns>
+		Task<bool> DeletePlatformAsync(int warehouseId);
+
+    }
 }

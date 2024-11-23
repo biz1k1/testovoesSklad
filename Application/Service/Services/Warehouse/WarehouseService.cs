@@ -27,8 +27,10 @@ namespace Application.Service.Services.Warehouse
 			_logger = logger;
 			_mapper = mapper;
 		}
-		#region Публичные методы
-		public async Task AddWarehouseAsync()
+        #region Публичные методы
+
+        /// <inheritdoc />
+        public async Task AddWarehouseAsync()
 		{
 			try
 			{
@@ -41,7 +43,8 @@ namespace Application.Service.Services.Warehouse
 			}
 		}
 
-		public async Task<IEnumerable<WarehouseOutput>> GetWarehouseAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<WarehouseOutput>> GetWarehouseAsync()
 		{
 			try
 			{
@@ -57,6 +60,22 @@ namespace Application.Service.Services.Warehouse
 				throw new ServiceException(ex.Message);
 			}
 		}
-		#endregion
-	}
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteWarehouseAsync(int warehouseId)
+		{
+			try
+			{
+				var result=await _warehouseRepository.DeleteWarehouseAsync(warehouseId);
+
+				return result;
+			}
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw new ServiceException(ex.Message);
+            }
+        }
+        #endregion
+    }
 }

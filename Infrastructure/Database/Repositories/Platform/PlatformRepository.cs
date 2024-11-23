@@ -19,8 +19,10 @@ namespace Infrastructure.Database.Repositories.Platform
 			_pgContext = pgContext;
 		}
 
-		#region Публичные методы
-		public async Task AddPlatformRepositoryAsync(AddPlatformInput platformInput)
+        #region Публичные методы
+
+        /// <inheritdoc />
+        public async Task AddPlatformRepositoryAsync(AddPlatformInput platformInput)
 		{
 			var lastPlatformeId = _pgContext.Platforms.
 				OrderByDescending(x => x.Id)
@@ -40,14 +42,16 @@ namespace Infrastructure.Database.Repositories.Platform
 			await _pgContext.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<PlatformEntity>> GetAllPlatformAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<PlatformEntity>> GetAllPlatformAsync()
 		{
-			var result = await _pgContext.Platforms.ToListAsync();
+			var result = await _pgContext.Platforms.Include(x=>x.Pickets).ToListAsync();
 
 			return result;
 		}
 
-		public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
+        /// <inheritdoc />
+        public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
 		{
 			var updateResult = new PlatformEntity
 			{
@@ -60,6 +64,26 @@ namespace Infrastructure.Database.Repositories.Platform
 
 			await _pgContext.SaveChangesAsync();
 		}
-		#endregion
-	}
+
+        /// <inheritdoc />
+		public async Task<bool> DeletePlatformAsync(int platformId)
+		{
+            var platform = await _pgContext.Platforms.Where(x => x.Id == platformId)
+				.Include(x => x.Pickets).FirstOrDefaultAsync();
+
+            var platformPickets = platform.Pickets.Count();
+
+            if (platform is null || platformPickets is not 0)
+            {
+                return false;
+            }
+
+			_pgContext.Platforms.Remove(platform);
+
+            await _pgContext.SaveChangesAsync();
+
+            return true;
+        }
+        #endregion
+    }
 }

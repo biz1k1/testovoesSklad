@@ -1,5 +1,5 @@
 ﻿@rendermode InteractiveAuto
-@using Web.Components.Pages.Input.Dialog
+@using Web.Components.Pages.Input.Dialog.Create
 @using Domain.Model.Models.Input
 @using Domain.Model.Models.Output
 
@@ -11,7 +11,7 @@
             <div>
                 <div class="buttonCreate">
                     <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" Gap="1rem" Wrap="FlexWrap.Wrap">
-                        <RadzenButton ButtonType="ButtonType.Submit" Click="EditPlatformDialog" Text="Добавить платформу" ButtonStyle="ButtonStyle.Primary" Disabled="false" />
+                        <RadzenButton ButtonType="ButtonType.Submit" Click="EditPlatformDialog" Text="Добавить пикет" ButtonStyle="ButtonStyle.Primary" Disabled="false" />
                     </RadzenStack>
                 </div>
             </div>
@@ -22,12 +22,12 @@
 
 @code {
     [Parameter]
-    public IEnumerable<WarehouseOutput>? warehouses { get; set; }
+    public IEnumerable<PlatformOutput>? Platforms { get; set; }
 
     private async Task EditPlatformDialog()
     {
-        var parametrs = new Dictionary<string, object>() { { "warehouses", warehouses } };
+        var parametrs = new Dictionary<string, object>() { { "Platforms", Platforms } };
         var options = new Radzen.DialogOptions() { Width = "350px", Height = "350px" };
-        await DialogService.OpenAsync<PlatformCreateDialog>("Добавление платформы", parametrs, options);
+        await DialogService.OpenAsync<PicketCreateDialog>("Добавление пикета", parametrs, options);
     }
 }

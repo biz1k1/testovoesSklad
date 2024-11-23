@@ -13,9 +13,9 @@ namespace Application.Abstraction.Repositories.Platform
 		Task<IEnumerable<PlatformEntity>> GetAllPlatformAsync();
 
 		/// <summary>
-		/// Метод добавляет площадку (для добавления нужен пикет)
+		/// Метод добавляет площадку 
 		/// </summary>
-		/// <param name="picketId">Id пикета</param>
+		/// <param name="platformInput">Входна ямодель для добавления</param>
 		/// <returns></returns>
 		Task AddPlatformRepositoryAsync(AddPlatformInput platformInput);
 
@@ -26,5 +26,13 @@ namespace Application.Abstraction.Repositories.Platform
 		/// <returns></returns>
 		Task UpdatePlatformAsync(UpdatePlatformInput platformInput);
 
-	}
+		/// <summary>
+		/// Метод удаляет платформу
+		/// </summary>
+		/// <param name="platformId">Айди платформы</param>
+		/// <returns></returns>
+		Task<bool> DeletePlatformAsync(int platformId);
+
+
+    }
 }

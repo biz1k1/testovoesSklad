@@ -1,0 +1,41 @@
+﻿@using Domain.Model.Models.Output
+@using Web.Services
+@inject PicketService PicketService
+@inject DialogService DialogService
+
+<main>
+
+    <div>
+        <EditForm FormName="Удаление пикета пикета" Model="@picketNumber" OnSubmit="UpdatePlatform">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>Выберите платформу, который привяжется пикет:</label>
+                <RadzenDropDown @bind-Value="picketNumber" Data="Pickets.Select(x=>x.Number)" Style="width: 100%;" />
+            </div>
+
+            <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
+            <RadzenButton class="button-form-cancel" ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
+        </EditForm>
+    </div>
+</main>
+
+@code {
+    [Parameter]
+    public IEnumerable<PicketOutput>? Pickets { get; set; }
+    private int picketNumber;
+
+    private async Task UpdatePlatform()
+    {
+
+        var picket = Pickets.Where(x => x.Number == picketNumber).FirstOrDefault();
+
+        await PicketService.DeletePicketAsync(picket.Id);
+    }
+    private void CloseDialog()
+    {
+        DialogService.Close();
+    }
+
+}

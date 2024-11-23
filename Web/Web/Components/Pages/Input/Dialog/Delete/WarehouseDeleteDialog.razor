@@ -1,0 +1,41 @@
+﻿@using Domain.Model.Models.Output
+@using Web.Services
+@inject WarehouseService WarehouseService
+@inject DialogService DialogService
+
+<main>
+
+    <div>
+        <EditForm FormName="Добавление пикета" Model="@warehouseName" OnSubmit="UpdatePlatform">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>Выберите платформу, который привяжется пикет:</label>
+                <RadzenDropDown @bind-Value="warehouseName" Data="Warehouses.Select(x=>x.Name)" Style="width: 100%;" />
+            </div>
+
+            <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
+            <RadzenButton class="button-form-cancel" ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
+        </EditForm>
+    </div>
+</main>
+
+@code {
+    [Parameter]
+    public IEnumerable<WarehouseOutput>? Warehouses { get; set; }
+    private string warehouseName="Номер склада";
+
+    private async Task UpdatePlatform()
+    {
+
+        var warehouse = Warehouses.Where(x => x.Name == warehouseName).FirstOrDefault();
+
+        await WarehouseService.DeleteWarehouseAsync(warehouse.Id);
+    }
+    private void CloseDialog()
+    {
+        DialogService.Close();
+    }
+
+}

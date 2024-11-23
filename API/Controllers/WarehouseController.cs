@@ -45,5 +45,19 @@ namespace Web.Controllers
 		{
 			await _warehouseService.AddWarehouseAsync();
 		}
-	}
+
+        /// <summary>
+        /// Метод удаляет склад
+        /// </summary>
+        /// <param name="warehouseId">Айди склада</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("warehouse-delete")]
+        public async Task<bool> DeletePicketAsync(int warehouseId)
+        {
+            var result = await _warehouseService.DeleteWarehouseAsync(warehouseId);
+
+            return result;
+        }
+    }
 }

@@ -60,5 +60,18 @@ namespace Web.Controllers
 			await _platformService.UpdatePlatformAsync(platformInput);
 		}
 
-	}
+        /// <summary>
+        /// Метод удаляет площадку
+        /// </summary>
+        /// <param name="platformId">Айди площадки</param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("platform-delete")]
+        public async Task<bool> DeletePicketAsync(int platformId)
+        {
+            var result = await _platformService.DeletePlatformAsync(platformId);
+
+            return result;
+        }
+    }
 }

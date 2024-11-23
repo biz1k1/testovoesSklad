@@ -20,8 +20,10 @@ namespace Infrastructure.Database.Repositories.Picket
 			_pgContext = pgContext;
 		}
 
-		#region Публичные методы
-		public async Task AddPicketAsync(int platformId)
+        #region Публичные методы
+
+        /// <inheritdoc />
+        public async Task AddPicketAsync(int platformId)
 		{
 			var platform =await _pgContext.Platforms.FirstOrDefaultAsync(x=>x.Id==platformId);
 
@@ -54,14 +56,16 @@ namespace Infrastructure.Database.Repositories.Picket
 			
 		}
 
-		public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
 		{
 			var result = await _pgContext.Pickets.ToListAsync();
 
 			return result;
 		}
 
-		public async Task UpdatePicketsAsync(UpdatePicketInput updatePicketInput)
+        /// <inheritdoc />
+        public async Task UpdatePicketsAsync(UpdatePicketInput updatePicketInput)
 		{
 			var platform = await _pgContext.Platforms.FirstOrDefaultAsync(x => x.Id == updatePicketInput.PlatformId);
 
@@ -76,12 +80,24 @@ namespace Infrastructure.Database.Repositories.Picket
 			{
 				throw new NotFoundPicketException(updatePicketInput.PicketId);
 			}
-
-			
-			//Удаляем пикет из платформы
-			
-			//Добавляем пикет в новую платформу
 		}
-		#endregion
-	}
+
+        /// <inheritdoc />
+        public async Task<bool> DeletePicketAsync(int picketId)
+        {
+			var picket = await _pgContext.Pickets.Where(x => x.Id == picketId).FirstOrDefaultAsync();
+
+            if (picket is null )
+            {
+                return false;
+            }
+
+            _pgContext.Pickets.Remove(picket);
+
+			await _pgContext.SaveChangesAsync();
+
+            return true;
+        }
+        #endregion
+    }
 }

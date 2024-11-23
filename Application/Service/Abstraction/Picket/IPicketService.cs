@@ -24,5 +24,13 @@ namespace Application.Service.Abstraction.Picket
 		/// <param name="picketInput">Входная модель для обновления пикетов</param>
 		/// <returns></returns>
 		Task UpdatePicketsAsync(UpdatePicketInput picketInput);
-	}
+
+		/// <summary>
+		/// Метод удаляет пикет
+		/// </summary>
+		/// <param name="picketId"></param>
+		/// <returns></returns>
+		Task<bool> DeleletePicketAsync(int picketId);
+
+    }
 }

@@ -17,6 +17,15 @@ namespace Application.Abstraction.Repositories.Warehouse
 		/// Метод создает склад
 		/// </summary>
 		/// <returns></returns>
+		/// 
 		Task AddWarehouseAsync();
-	}
+
+		/// <summary>
+		/// Метод удаляет склад
+		/// </summary>
+		/// <param name="warehouseId">Айди склада</param>
+		/// <returns></returns>
+		Task<bool> DeleteWarehouseAsync(int warehouseId);
+
+    }
 }

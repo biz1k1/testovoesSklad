@@ -25,5 +25,12 @@ namespace Application.Abstraction.Repositories.Picket
 		/// <returns></returns>
 		Task UpdatePicketsAsync(UpdatePicketInput picketInput);
 
-	}
+		/// <summary>
+		/// Метод удаляет пикет
+		/// </summary>
+		/// <param name="picketId">Айди пикета</param>
+		/// <returns></returns>
+		Task<bool> DeletePicketAsync(int picketId);
+
+    }
 }

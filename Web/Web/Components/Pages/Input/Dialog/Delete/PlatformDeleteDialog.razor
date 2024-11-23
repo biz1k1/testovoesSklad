@@ -1,0 +1,41 @@
+﻿@using Domain.Model.Models.Output
+@using Web.Services
+@inject PlatformService PlatformService
+@inject DialogService DialogService
+
+<main>
+
+    <div>
+        <EditForm FormName="Добавление пикета" Model="@platformNumber" OnSubmit="UpdatePlatform">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label>Выберите платформу, который привяжется пикет:</label>
+                <RadzenDropDown @bind-Value="platformNumber" Data="Platforms.Select(x=>x.Number)" Style="width: 100%;" />
+            </div>
+
+            <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
+            <RadzenButton class="button-form-cancel" ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
+        </EditForm>
+    </div>
+</main>
+
+@code {
+    [Parameter]
+    public IEnumerable<PlatformOutput>? Platforms { get; set; }
+    private int platformNumber;
+
+    private async Task UpdatePlatform()
+    {
+
+        var platform = Platforms.Where(x => x.Number == platformNumber).FirstOrDefault();
+
+        await PlatformService.DeletePlatformAsync(platform.Id);
+    }
+    private void CloseDialog()
+    {
+        DialogService.Close();
+    }
+
+}

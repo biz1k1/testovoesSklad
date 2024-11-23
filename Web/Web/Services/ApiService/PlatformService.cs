@@ -44,11 +44,31 @@ namespace Web.Services
 
             try
             {
-                await httpClient.PostAsync("https://localhost:7294/Platform/platform", null);
+                await httpClient.PostAsync("https://localhost:7294/Platform/platform", jsonContent);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+            }
+
+        }
+
+        public async Task<bool> DeletePlatformAsync(int platformId)
+        {
+            var httpClient = CreateClient();
+            try
+            {
+                var response = await httpClient.DeleteAsync($"https://localhost:7294/Platform/platform-delete?platformId={platformId}");
+
+                var result = bool.Parse(await response.Content.ReadAsStringAsync());
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+
+                return false;
             }
 
         }

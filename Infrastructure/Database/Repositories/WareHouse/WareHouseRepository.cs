@@ -21,8 +21,10 @@ namespace Infrastructure.Database.Repositories.WareHouse
             _pgContext = pgContext;
         }
 
-		#region Публичные методы
-		public async Task AddWarehouseAsync()
+        #region Публичные методы
+
+        /// <inheritdoc />
+        public async Task AddWarehouseAsync()
 		{
 
 			var lastWarehouseId = _pgContext.WareHouses.
@@ -42,12 +44,33 @@ namespace Infrastructure.Database.Repositories.WareHouse
             await _pgContext.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<WareHouseEntity>> GetWarehouseAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<WareHouseEntity>> GetWarehouseAsync()
 		{
 			var result = await _pgContext.WareHouses.Include(x=>x.Platforms).ThenInclude(x=>x.Pickets).ToListAsync();
 
 			return result;
 		}
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteWarehouseAsync(int warehouseId)
+		{
+			var warehouse = await _pgContext.WareHouses.Where(x => x.Id == warehouseId)
+				.Include(x => x.Platforms).FirstOrDefaultAsync();
+
+			var warehousePlatform = warehouse.Platforms.Count();
+
+			if (warehouse is null || warehousePlatform is not 0)
+			{
+				return false;
+			}
+
+			_pgContext.WareHouses.Remove(warehouse);
+
+            await _pgContext.SaveChangesAsync();
+
+            return true;
+        }
 		#endregion
 	}
 }

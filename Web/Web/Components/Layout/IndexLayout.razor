@@ -1,22 +1,36 @@
 ﻿@page "/"
 @using Web.Components.Pages.Table
-@using Web.Components.Pages.Input.Button
 @using Domain.Model.Models.Output
 @using Web.Services
-
+@using Web.Components.Pages.Input.Button.Create
+@using Web.Components.Pages.Input.Button.Delete
 @inject WarehouseService WarehouseService
 @inject PlatformService PlatformService
+@inject PicketService PicketService
 @layout Web.Components.Layout.MainLayout
 
+
+@* 
+    Сломались css Стили, почему-то перестали применятся
+    Пришлось стили так прописывать
+*@
 <WarehouseTable Warehouses="warehouses" />
-<CreateWarehouseButton/>
-<CreatePlatformButton warehouses="@warehouses"/>
-<CreatePicketButton Platforms="platforms"/>
+<div style="margin-top:50px; margin-right:400px;">
+    <CreateWarehouseButton/>
+    <CreatePlatformButton Warehouses="@warehouses"/>
+    <CreatePicketButton Platforms="platforms"/>
+</div>
+<div style="margin-top: 100px;margin-left: 700px;margin-top: -110px">
+    <DeleteWarehouseButton Warehouses="warehouses" /> 
+    <DeletePlatformButton Platforms="platforms"/>
+    <DeletePicketButton Pickets="pickets"/>
+</div>
 
 @code{
 
     private IEnumerable<WarehouseOutput>? warehouses;
     private IEnumerable<PlatformOutput>? platforms;
+    private IEnumerable<PicketOutput>? pickets;
 
     protected override async Task OnInitializedAsync()
     {
@@ -26,6 +40,9 @@
             warehouses = await WarehouseService.GetWarehousesAsync();
 
             platforms = await PlatformService.GetPlatformAsync();
+
+            pickets = await PicketService.GetPicketsAsync();
+
         }
         catch (Exception ex)
         {

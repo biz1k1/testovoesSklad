@@ -55,11 +55,24 @@ namespace Web.Controllers
 		/// <param name="picketInput"></param>
 		/// <returns></returns>
 		[HttpPut]
-		[Route("platform-details")]
+		[Route("picket-details")]
 		public async Task UpdatePicketsAsync([FromBody] UpdatePicketInput picketInput)
 		{
 			await _picketService.UpdatePicketsAsync(picketInput);
 		}
 
-	}
+		/// <summary>
+		/// Метод удаляет пикет
+		/// </summary>
+		/// <param name="picketId">Айди пикета</param>
+		/// <returns></returns>
+        [HttpDelete]
+        [Route("picket-delete")]
+        public async Task<bool> DeletePicketAsync (int picketId)
+        {
+            var result= await _picketService.DeleletePicketAsync(picketId);
+
+			return result;
+        }
+    }
 }

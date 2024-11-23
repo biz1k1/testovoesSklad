@@ -5,6 +5,7 @@ using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
 using Microsoft.Extensions.Logging;
 using Application.Exceptions;
+using Application.Abstraction.Repositories.Platform;
 
 
 namespace Application.Service.Services.Picket
@@ -27,8 +28,10 @@ namespace Application.Service.Services.Picket
 		}
 
 
-		#region Публичные методы
-		public async Task AddPicketAsync(int platformId)
+        #region Публичные методы
+
+        /// <inheritdoc />
+        public async Task AddPicketAsync(int platformId)
 		{
 			try
 			{
@@ -41,7 +44,8 @@ namespace Application.Service.Services.Picket
 			}
 		}
 
-		public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
+        /// <inheritdoc />
+        public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
 		{
 			try
 			{
@@ -54,7 +58,8 @@ namespace Application.Service.Services.Picket
 			}
 		}
 
-		public async Task UpdatePicketsAsync(UpdatePicketInput picketInput)
+        /// <inheritdoc />
+        public async Task UpdatePicketsAsync(UpdatePicketInput picketInput)
 		{
 			try
 			{
@@ -66,7 +71,23 @@ namespace Application.Service.Services.Picket
 				throw new ServiceException(ex.Message);
 			}
 		}
-		#endregion
 
-	}
+        /// <inheritdoc />
+        public async Task<bool> DeleletePicketAsync(int picketId)
+        {
+            try
+            {
+                var result = await _picketRepository.DeletePicketAsync(picketId);
+
+				return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw new ServiceException(ex.Message);
+            }
+        }
+        #endregion
+
+    }
 }
