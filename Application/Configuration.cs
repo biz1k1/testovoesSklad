@@ -4,13 +4,10 @@ using Application.Service.Abstraction.Warehouse;
 using Application.Service.Services.Picket;
 using Application.Service.Services.Platform;
 using Application.Service.Services.Warehouse;
-using Domain.Entity.Entitys;
+using Application.Validation;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application
 {
@@ -23,8 +20,9 @@ namespace Application
 			services.AddScoped<IPicketService, PicketService>();
 
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddValidatorsFromAssemblyContaining<PlatformAddValidation>();
 
-			return services;
+            return services;
 		}
 
 	}

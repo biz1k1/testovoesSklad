@@ -1,6 +1,9 @@
 ﻿using Application.Service.Abstraction.Platform;
+using Application.Validation;
 using Domain.Model.Models.Input;
 using Domain.Model.Models.Output;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -13,14 +16,17 @@ namespace Web.Controllers
 	public class PlatformController:ControllerBase
 	{
 		private readonly IPlatformService _platformService;
-		/// <summary>
-		/// Конструктор
-		/// </summary>
-		/// <param name="platformService"></param>
-		public PlatformController(
-			IPlatformService platformService)
+		private readonly IValidator<AddPlatformInput> _validator;
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="platformService"></param>
+        public PlatformController(
+			IPlatformService platformService,
+			IValidator<AddPlatformInput> validator)
 		{
 			_platformService = platformService;
+			_validator = validator;
 		}
 		
 		/// <summary>
@@ -43,9 +49,17 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
 		[Route("platform")]
-		public async Task AddPlatformRepositoryAsync([FromBody] AddPlatformInput platformInput)
+		public async Task<IActionResult> AddPlatformRepositoryAsync([FromBody] AddPlatformInput platformInput)
 		{
-			await _platformService.AddPlatformRepositoryAsync(platformInput);
+            var validationResult = await _validator.ValidateAsync(platformInput);
+
+            if (!validationResult.IsValid)
+            {
+                return ValidationProblem(BehaviorException.AddToModelState(validationResult));
+            }
+            await _platformService.AddPlatformRepositoryAsync(platformInput);
+
+			return Ok(true);
 		}
 
 		/// <summary>
