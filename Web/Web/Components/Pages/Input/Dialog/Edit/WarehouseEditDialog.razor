@@ -8,19 +8,29 @@
 <main>
 
 <div class="buttonCreate">
-      @*   <EditForm Model="warehouseOutput" OnSubmit="UpdatePlatform" >
+        <EditForm FormName="Добавление пикета" Model="@updateWarehouseModel" OnSubmit="UpdatePlatform">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
+            <div class="form-group">
+                <RadzenLabel>Платформа</RadzenLabel>
+                <RadzenDropDown @bind-Value="updateWarehouseModel.PlatformID" Data="Warehouses.SelectMany(x=>x.Platforms.Select(x=>x.Number))" Style="width: 100%;" />
 
-        <RadzenButton ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
-        <RadzenButton ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
-    </EditForm> *@
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Груз на площадке(т)</RadzenText>
+                <RadzenNumeric @bind-Value="updateWarehouseModel.Cargo" aria-label="Default TextBox" />
+            </div>
+
+            <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
+            <RadzenButton class="button-form-cancel" ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
+        </EditForm>
 </div>
 </main>
 
 @code {
     [Parameter]
-    public WarehouseOutput warehouseOutput { get; set; } = new();
+    public IEnumerable<WarehouseOutput> Warehouses { get; set; }
 
+    private UpdateWarehouseModel updateWarehouseModel = new();
 
     private async Task UpdatePlatform()
     {

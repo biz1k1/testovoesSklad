@@ -30,11 +30,11 @@ namespace Web.Controllers
 		}
 		
 		/// <summary>
-		/// Метод получает список площадок
+		/// Метод получает список площадок со вложенными в них пикетами
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Route("platform-lists")]
+		[Route("Platform-lists")]
 		public async Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync()
 		{
 			var result = await _platformService.GetAllPlatformAsync();
@@ -48,7 +48,7 @@ namespace Web.Controllers
         /// <param name="platformInput"></param>
         /// <returns></returns>
         [HttpPost]
-		[Route("platform")]
+		[Route("Platform")]
 		public async Task<IActionResult> AddPlatformRepositoryAsync([FromBody] AddPlatformInput platformInput)
 		{
             var validationResult = await _validator.ValidateAsync(platformInput);
@@ -62,16 +62,16 @@ namespace Web.Controllers
 			return Ok(true);
 		}
 
-		/// <summary>
-		/// Метод обновляет площадку
-		/// </summary>
-		/// <param name="platformInput"></param>
-		/// <returns></returns>
-		[HttpPut]
-		[Route("platform-details")]
-		public async Task UpdatePlatformAsync([FromBody] UpdatePlatformInput platformInput)
+        /// <summary>
+        /// Метод обновляет площадку у склада
+        /// </summary>
+        /// <param name="updateInput"></param>
+        /// <returns></returns>
+        [HttpPut]
+		[Route("Platform-details")]
+		public async Task UpdatePlatformAsync([FromBody] UpdatePlatformInput updateInput)
 		{
-			await _platformService.UpdatePlatformAsync(platformInput);
+			await _platformService.UpdatePlatformAsync(updateInput);
 		}
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Web.Controllers
         /// <param name="platformId">Айди площадки</param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("platform-delete")]
+        [Route("Platform-delete")]
         public async Task<bool> DeletePicketAsync(int platformId)
         {
             var result = await _platformService.DeletePlatformAsync(platformId);

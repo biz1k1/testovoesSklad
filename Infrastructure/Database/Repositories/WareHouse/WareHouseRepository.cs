@@ -71,6 +71,7 @@ namespace Infrastructure.Database.Repositories.WareHouse
 
             return true;
         }
+
 		#endregion
 	}
 }

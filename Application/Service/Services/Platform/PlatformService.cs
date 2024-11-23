@@ -66,11 +66,11 @@ namespace Application.Service.Services.Platform
 		}
 
         /// <inheritdoc />
-        public async Task UpdatePlatformAsync(UpdatePlatformInput platformInput)
+        public async Task UpdatePlatformAsync(UpdatePlatformInput updateInput)
 		{
 			try
 			{
-				await _platformRepository.UpdatePlatformAsync(platformInput);
+				await _platformRepository.UpdatePlatformAtWarehouse(updateInput);
 			}
 			catch (Exception ex)
 			{

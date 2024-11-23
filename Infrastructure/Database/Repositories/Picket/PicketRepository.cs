@@ -65,29 +65,11 @@ namespace Infrastructure.Database.Repositories.Picket
 		}
 
         /// <inheritdoc />
-        public async Task UpdatePicketsAsync(UpdatePicketInput updatePicketInput)
-		{
-			var platform = await _pgContext.Platforms.FirstOrDefaultAsync(x => x.Id == updatePicketInput.PlatformId);
-
-			if (platform is null)
-			{
-				throw new NotFoundPlatformException(updatePicketInput.PlatformId);
-			}
-
-			var picket= await _pgContext.Pickets.FirstOrDefaultAsync(x => x.Id == updatePicketInput.PicketId);
-
-			if (platform is null)
-			{
-				throw new NotFoundPicketException(updatePicketInput.PicketId);
-			}
-		}
-
-        /// <inheritdoc />
         public async Task<bool> DeletePicketAsync(int picketId)
         {
 			var picket = await _pgContext.Pickets.Where(x => x.Id == picketId).FirstOrDefaultAsync();
 
-            if (picket is null )
+            if (picket is null)
             {
                 return false;
             }
@@ -98,6 +80,42 @@ namespace Infrastructure.Database.Repositories.Picket
 
             return true;
         }
+
+        /// <inheritdoc />
+        public async Task<bool> UpdatePicketAtPlatform(UpdatePicketInput updateInput)
+		{
+
+			var platform = await _pgContext.Platforms.Where(x => x.Id == updateInput.PlatformId).FirstOrDefaultAsync(); 
+
+			var picket = await _pgContext.Pickets.Where(x => x.Id == updateInput.PicketId).Include(x=>x.Platforms).FirstOrDefaultAsync();
+
+			//Если не удалось найти пикет и платформу
+			if(platform is null && platform is null)
+			{
+				return false;
+			}
+
+			// Удаление пикета из площадки, в которой он находится
+			var platformPicketId = picket.Platforms.Select(x => x.Id).FirstOrDefault();
+
+			var platformFromRemovePicket = await _pgContext.Platforms.Include(x => x.Pickets).FirstOrDefaultAsync(x => x.Id == platformPicketId);
+
+			if(platformFromRemovePicket is not null)
+			{
+				platformFromRemovePicket.Pickets.Remove(picket);
+
+				_pgContext.Platforms.Update(platformFromRemovePicket);
+			}
+
+
+			//Добавление пикета в новую площадку
+
+			platform.Pickets.Add(picket);
+
+			await _pgContext.SaveChangesAsync();
+
+			return true;
+		}
         #endregion
     }
 }

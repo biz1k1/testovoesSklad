@@ -18,10 +18,10 @@
 
             <div class="form-group">
                 <label>Выберите склад, который привяжется к площадке:</label>
-                <RadzenDropDown @bind-Value="platformModel.WarehouseName" Data="Warehouses.Select(x=>x.Name)" Style="width: 100%;" />
+                <RadzenDropDown Placeholder="Выберите платформу" @bind-Value="platformModel.WarehouseName" Data="Warehouses.Select(x=>x.Name)" Style="width: 100%;" />
 
                 <RadzenText  TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Груз на площадке(т)</RadzenText>
-                <RadzenNumeric @bind-Value="platformModel.Cargo" aria-label="Default TextBox" />
+                <RadzenNumeric Placeholder="" @bind-Value="platformModel.Cargo" aria-label="Default TextBox" />
 
             </div>
 

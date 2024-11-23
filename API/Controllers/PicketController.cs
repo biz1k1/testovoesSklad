@@ -29,7 +29,7 @@ namespace Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Route(template: "picket-lists")]
+		[Route(template: "Picket-lists")]
 		public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
 		{
 			var result = await _picketService.GetAllPicketsAsync();
@@ -43,22 +43,22 @@ namespace Web.Controllers
 		/// <param name="platformId">Id платформы, в который добавится пикет</param>
 		/// <returns></returns>
 		[HttpPost]
-		[Route(template: "picket")]
+		[Route(template: "Picket")]
 		public async Task AddPicketAsync(int platformId)
 		{
 			await _picketService.AddPicketAsync(platformId);
 		}
 
 		/// <summary>
-		/// Метод обновляет данные пикета
+		/// Метод обновляет пикет у площадки
 		/// </summary>
 		/// <param name="picketInput"></param>
 		/// <returns></returns>
 		[HttpPut]
-		[Route("picket-details")]
+		[Route("Picket-details")]
 		public async Task UpdatePicketsAsync([FromBody] UpdatePicketInput picketInput)
 		{
-			await _picketService.UpdatePicketsAsync(picketInput);
+			var result=await _picketService.UpdatePicketAtPlatform(picketInput);
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace Web.Controllers
 		/// <param name="picketId">Айди пикета</param>
 		/// <returns></returns>
         [HttpDelete]
-        [Route("picket-delete")]
+        [Route("Picket-delete")]
         public async Task<bool> DeletePicketAsync (int picketId)
         {
             var result= await _picketService.DeleletePicketAsync(picketId);

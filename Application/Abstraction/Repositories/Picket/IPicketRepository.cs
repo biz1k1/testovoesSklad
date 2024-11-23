@@ -18,19 +18,19 @@ namespace Application.Abstraction.Repositories.Picket
 		/// <returns></returns>
 		Task AddPicketAsync(int platformId);
 
-		/// <summary>
-		/// Переназначить пикеты на другие платформы
-		/// </summary>
-		/// <param name="picketInput">Входная модель для обновления пикетов</param>
-		/// <returns></returns>
-		Task UpdatePicketsAsync(UpdatePicketInput picketInput);
+        /// <summary>
+        /// Переназначить пикеты на другие платформы
+        /// </summary>
+        /// <param name="updateInput">Входная модель для обновления пикетов</param>
+        /// <returns></returns>
+        Task<bool> UpdatePicketAtPlatform(UpdatePicketInput updateInput);
 
-		/// <summary>
-		/// Метод удаляет пикет
-		/// </summary>
-		/// <param name="picketId">Айди пикета</param>
-		/// <returns></returns>
-		Task<bool> DeletePicketAsync(int picketId);
+        /// <summary>
+        /// Метод удаляет пикет
+        /// </summary>
+        /// <param name="picketId">Айди пикета</param>
+        /// <returns></returns>
+        Task<bool> DeletePicketAsync(int picketId);
 
     }
 }

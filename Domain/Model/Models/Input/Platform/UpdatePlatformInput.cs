@@ -6,14 +6,18 @@
     public record class UpdatePlatformInput
     {
         /// <summary>
-        /// Id платформы, у которой обновится груз
+        /// Id склада, у которого изменится площадка
         /// </summary>
-        public int Id { get; set; }
+        public int WarehouseId { get; set; }
+        /// <summary>
+        /// Id площадки
+        /// </summary>
+        public int PlatformId { get; set; }
 
         /// <summary>
         /// Груз на площадке (т)
         /// </summary>
-        public double Cargo { get; set; }
+        public double? Cargo { get; set; }
 
 
 

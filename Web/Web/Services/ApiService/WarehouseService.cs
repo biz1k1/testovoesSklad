@@ -1,5 +1,6 @@
 ﻿using Domain.Model.Models.Output;
 using System.Net.Http.Json;
+using Web.Model;
 
 namespace Web.Services
 {
@@ -74,6 +75,25 @@ namespace Web.Services
                 return false;
             }
 
+        }
+
+        public async Task<bool> UpdateWarehouseAsync(UpdateWarehouseModel updateWarehouseModel)
+        {
+            var httpClient = CreateClient();
+            try
+            {
+                var response = await httpClient.DeleteAsync($"");
+
+                var result = bool.Parse(await response.Content.ReadAsStringAsync());
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                return false;
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Application.Service.Abstraction.Picket
 		/// </summary>
 		/// <param name="picketInput">Входная модель для обновления пикетов</param>
 		/// <returns></returns>
-		Task UpdatePicketsAsync(UpdatePicketInput picketInput);
+		Task<bool> UpdatePicketAtPlatform(UpdatePicketInput picketInput);
 
 		/// <summary>
 		/// Метод удаляет пикет

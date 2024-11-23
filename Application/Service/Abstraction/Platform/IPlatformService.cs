@@ -18,12 +18,12 @@ namespace Application.Service.Abstraction.Platform
 		/// <returns></returns>
 		Task AddPlatformRepositoryAsync(AddPlatformInput platformInput);
 
-		/// <summary>
-		/// Метод обновляет груз и/или склад
-		/// </summary>
-		/// <param name="platformInput">Входная модель для обновления</param>
-		/// <returns></returns>
-		Task UpdatePlatformAsync(UpdatePlatformInput platformInput);
+        /// <summary>
+        /// Метод обновляет платформу и/или ее груз у склада
+        /// </summary>
+        /// <param name="platformInput">Входная модель для обновления</param>
+        /// <returns></returns>
+        Task UpdatePlatformAsync(UpdatePlatformInput updateInput);
 
 		/// <summary>
 		/// Метод удаляет площадку

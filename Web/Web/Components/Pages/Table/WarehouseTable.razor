@@ -20,30 +20,22 @@
                     <Columns>
                         <RadzenDataGridColumn Title="Номер склада" Width="80px" TextAlign="TextAlign.Center" >
                             <Template Context="warehouse">
-                                <ul>
-                                    @warehouse.WarehouseName
-                                </ul>
+                                <RadzenButton ButtonType="ButtonType.Submit" Click="EditWarehouseDialog" Text=@warehouse.WarehouseName ButtonStyle="ButtonStyle.Primary" Disabled="false" />
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
-                                <ul>
-                                    @warehouse.PlatformNumber
-                                </ul>
+                                @warehouse.PlatformNumber
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Номер пикета" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
-                                <ul>
-                                    @warehouse.PicketNumber
-                                </ul>
+                                @warehouse.PicketNumber
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
-
                                 @warehouse.PlatformCargo
-
                             </Template>
                         </RadzenDataGridColumn>
                     
@@ -71,11 +63,11 @@
 
     }
 
-    private async Task EditPlatformDialog(WarehouseOutput warehouseOutput)
+    private async Task EditWarehouseDialog()
     {
-        var parametrs = new Dictionary<string, object>() { { "warehouseOutput", warehouseOutput } };
-        var options = new Radzen.DialogOptions() { Width = "700px", Height = "450px" };
-        await DialogService.OpenAsync<WarehouseEditDialog>("Edit platform", parametrs, options);
+        var parametrs = new Dictionary<string, object>() { { "Warehouses", Warehouses } };
+        var options = new Radzen.DialogOptions() { Width = "350px", Height = "350px" };
+        await DialogService.OpenAsync<WarehouseEditDialog>("Обновление склада", parametrs, options);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -91,4 +83,5 @@
 
         await base.OnParametersSetAsync();
     }
+
 }

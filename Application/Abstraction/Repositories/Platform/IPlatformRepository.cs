@@ -20,19 +20,17 @@ namespace Application.Abstraction.Repositories.Platform
 		Task AddPlatformRepositoryAsync(AddPlatformInput platformInput);
 
 		/// <summary>
-		/// Метод обновляет груз и/или склад
-		/// </summary>
-		/// <param name="platformInput">Входная модель для обновления</param>
-		/// <returns></returns>
-		Task UpdatePlatformAsync(UpdatePlatformInput platformInput);
-
-		/// <summary>
 		/// Метод удаляет платформу
 		/// </summary>
 		/// <param name="platformId">Айди платформы</param>
 		/// <returns></returns>
 		Task<bool> DeletePlatformAsync(int platformId);
 
-
+		/// <summary>
+		/// Метод обновляет платформу и/или ее груз у склада
+		/// </summary>
+		/// <param name="updateInput">Входная модель для обновления</param>
+		/// <returns></returns>
+		Task<bool> UpdatePlatformAtWarehouse(UpdatePlatformInput updateInput);
     }
 }

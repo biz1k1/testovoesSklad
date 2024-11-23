@@ -59,11 +59,13 @@ namespace Application.Service.Services.Picket
 		}
 
         /// <inheritdoc />
-        public async Task UpdatePicketsAsync(UpdatePicketInput picketInput)
+        public async Task<bool> UpdatePicketAtPlatform(UpdatePicketInput picketInput)
 		{
 			try
 			{
-				await _picketRepository.UpdatePicketsAsync(picketInput);
+				var result=await _picketRepository.UpdatePicketAtPlatform(picketInput);
+
+				return result;
 			}
 			catch (Exception ex)
 			{
