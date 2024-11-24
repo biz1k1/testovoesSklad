@@ -53,13 +53,13 @@
     [Parameter]
     public IEnumerable<WarehouseOutput>? Warehouses{ get; set;}
 
-    public List<TableRow> tableRow {get;set;}
+    public List<TableRowWarehouse> tableRow {get;set;}
 
 
     protected override async Task OnInitializedAsync()
     {
 
-        tableRow = FlattenTreeService.FlattenTree(Warehouses);
+        tableRow = FlattenTreeService.FlattenTreeWarehouse(Warehouses);
 
     }
 

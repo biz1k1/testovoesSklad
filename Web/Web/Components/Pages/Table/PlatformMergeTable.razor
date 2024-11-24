@@ -4,7 +4,10 @@
 @using Model;
 @using Web.Components.Pages.Input.Dialog.Edit
 @using Web.Services
+@inject PlatformService PlatformService
+@inject FlattenTreeService FlattenTreeService
 
+@page "/PlatformTable"
 <div class="page">
     <main>
         <div class="TableStyle">
@@ -15,18 +18,18 @@
                     <Columns>
 
                         <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="warehouse">
-                                @warehouse.PlatformNumber
+                            <Template Context="platform">
+                                @platform.PlatformNumber
                             </Template>
                         </RadzenDataGridColumn>
-                        <RadzenDataGridColumn Title="Номер пикета" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="warehouse">
-                                @warehouse.PicketNumber
+                        <RadzenDataGridColumn Title="Дата объединения площадки" Width="80px" TextAlign="TextAlign.Center">
+                            <Template Context="platform">
+                                @platform.Date
                             </Template>
                         </RadzenDataGridColumn>
                         <RadzenDataGridColumn Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="warehouse">
-                                @warehouse.PlatformCargo
+                            <Template Context="platform">
+                                @platform.PlatformCargo
                             </Template>
                         </RadzenDataGridColumn>
 
@@ -40,8 +43,13 @@
     </main>
 </div>
 @code {
-    [Parameter]
-    public IEnumerable<PlatformOutput>? Platforms { get; set; }
 
-    public List<TableRow> tableRow { get; set; }
+    private IEnumerable<PlatformOutput>? platforms;
+
+    public List<TableRowPlatform> tableRow { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        platforms = await PlatformService.GetPlatformAsync();
+        tableRow = FlattenTreeService.FlattenTreePlatform(platforms);
+    }
 }

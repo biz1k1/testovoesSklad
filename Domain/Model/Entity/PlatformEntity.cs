@@ -30,9 +30,9 @@
         public ICollection<PicketEntity> Pickets { get; set; } = [];
 
         /// <summary>
-        /// Дата создания площадки
+        /// Дата объединения пикетов в площадку
         /// </summary>
-        public string Date { get; set; }
+        public string? Date { get; set; }
 
         /// <summary>
         /// Объединенная площадка это или нет

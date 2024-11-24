@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PgContext))]
-    [Migration("20241124194529_Create")]
+    [Migration("20241124201923_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -52,7 +52,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("Date")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsMerge")

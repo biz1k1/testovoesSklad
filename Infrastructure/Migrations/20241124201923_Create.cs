@@ -46,7 +46,7 @@ namespace Infrastructure.Migrations
                     Number = table.Column<int>(type: "integer", nullable: false),
                     Cargo = table.Column<double>(type: "double precision", nullable: false),
                     WareHouseId = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<string>(type: "text", nullable: false),
+                    Date = table.Column<string>(type: "text", nullable: true),
                     IsMerge = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

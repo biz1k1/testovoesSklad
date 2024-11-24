@@ -161,20 +161,24 @@ namespace Infrastructure.Database.Repositories.Picket
 
             var newId = lastPicketId != null ? lastPicketId.Id + 1 : 1;
 
-            var newPlatform = new PlatformEntity
+			var newPlatform = new PlatformEntity
 			{
 				Number = newId,
 				Cargo = summaryCargoPlatform,
 				WareHouseId = mergePicketOutput.WarehouseId,
-				Pickets = pickets
+				Pickets = pickets,
+				Date = (DateTime.UtcNow.Date).ToString(),
+				IsMerge = true
+
 			};
 
-
+			List<PlatformEntity> oldPlatformFormRemove=new();
 			// Убираем связь пикетов с их старыми площадками
 			foreach (var picket in pickets)
 			{
 				foreach (var oldPlatform in picket.Platforms.ToList())
 				{
+					oldPlatformFormRemove.Add(oldPlatform);
 					oldPlatform.Pickets.Remove(picket);
 					picket.Platforms.Remove(oldPlatform);
 				}
@@ -183,6 +187,9 @@ namespace Infrastructure.Database.Repositories.Picket
 			// Добавляем новую площадку в список
 			_pgContext.Platforms.Add(newPlatform);
 
+			//Удаление старых платформ
+			_pgContext.Platforms.RemoveRange(oldPlatformFormRemove);
+			//обновление пикетов
 			_pgContext.Pickets.UpdateRange(pickets);
 
 

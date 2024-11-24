@@ -37,9 +37,6 @@ namespace Infrastructure.Database.Repositories.Platform
 				Number = newId,
 				WareHouseId = platformInput.WarehouseId,
 				Cargo = platformInput.Cargo,
-				Date = DateTime.UtcNow.Date.ToString()
-
-
 			};
 
 			await _pgContext.Platforms.AddAsync(platform);

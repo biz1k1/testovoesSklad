@@ -49,7 +49,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("Date")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsMerge")
