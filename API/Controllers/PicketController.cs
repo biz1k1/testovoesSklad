@@ -1,6 +1,8 @@
 ﻿using Application.Service.Abstraction.Picket;
+using Application.Validation;
 using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -56,9 +58,18 @@ namespace Web.Controllers
 		/// <returns></returns>
 		[HttpPut]
 		[Route("Picket-details")]
-		public async Task UpdatePicketsAsync([FromBody] UpdatePicketInput picketInput)
+		public async Task<IActionResult> UpdatePicketsAsync([FromBody] UpdatePicketInput picketInput)
 		{
-			var result=await _picketService.UpdatePicketAtPlatform(picketInput);
+            var validationResult = await new PicketAddValidator().ValidateAsync(picketInput);
+
+            if (!validationResult.IsValid)
+            {
+                return ValidationProblem(BehaviorException.AddToModelState(validationResult));
+            }
+
+            var result=await _picketService.UpdatePicketAtPlatform(picketInput);
+
+			return Ok();
 		}
 
 		/// <summary>

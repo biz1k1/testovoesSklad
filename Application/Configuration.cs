@@ -20,7 +20,7 @@ namespace Application
 			services.AddScoped<IPicketService, PicketService>();
 
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddValidatorsFromAssemblyContaining<PlatformAddValidation>();
+            services.AddValidatorsFromAssemblyContaining<PlatformAddValidator>();
 
             return services;
 		}

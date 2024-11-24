@@ -16,17 +16,15 @@ namespace Web.Controllers
 	public class PlatformController:ControllerBase
 	{
 		private readonly IPlatformService _platformService;
-		private readonly IValidator<AddPlatformInput> _validator;
+
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="platformService"></param>
         public PlatformController(
-			IPlatformService platformService,
-			IValidator<AddPlatformInput> validator)
+			IPlatformService platformService)
 		{
 			_platformService = platformService;
-			_validator = validator;
 		}
 		
 		/// <summary>
@@ -51,7 +49,7 @@ namespace Web.Controllers
 		[Route("Platform")]
 		public async Task<IActionResult> AddPlatformRepositoryAsync([FromBody] AddPlatformInput platformInput)
 		{
-            var validationResult = await _validator.ValidateAsync(platformInput);
+			var validationResult = await new PlatformAddValidator().ValidateAsync(platformInput);
 
             if (!validationResult.IsValid)
             {
@@ -69,9 +67,19 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPut]
 		[Route("Platform-details")]
-		public async Task UpdatePlatformAsync([FromBody] UpdatePlatformInput updateInput)
+		public async Task<IActionResult> UpdatePlatformAsync([FromBody] UpdatePlatformInput updateInput)
 		{
-			await _platformService.UpdatePlatformAsync(updateInput);
+            var validationResult = await new PlatformUpdateValidator().ValidateAsync(updateInput);
+
+            if (!validationResult.IsValid)
+            {
+                return ValidationProblem(BehaviorException.AddToModelState(validationResult));
+            }
+
+            await _platformService.UpdatePlatformAsync(updateInput);
+
+            return Ok(true);
+
 		}
 
         /// <summary>
