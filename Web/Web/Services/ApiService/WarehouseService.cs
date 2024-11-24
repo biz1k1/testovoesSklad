@@ -1,5 +1,9 @@
-﻿using Domain.Model.Models.Output;
+﻿using Domain.Model.Models.Input;
+using Domain.Model.Models.Output;
 using System.Net.Http.Json;
+using System.Reflection;
+using System.Text.Json;
+using System.Text;
 using Web.Model;
 
 namespace Web.Services
@@ -80,15 +84,35 @@ namespace Web.Services
         public async Task<bool> UpdateWarehouseAsync(UpdateWarehouseModel updateWarehouseModel)
         {
             var httpClient = CreateClient();
+
+            using StringContent jsonContent = new(
+            JsonSerializer.Serialize(new UpdatePlatformInput
+            {
+                WarehouseId = updateWarehouseModel.WarehouseId,
+                PlatformId=updateWarehouseModel.PlatformID,
+                Cargo=updateWarehouseModel.Cargo
+            }),
+            Encoding.UTF8,
+            "application/json");
+
             try
             {
-                var response = await httpClient.DeleteAsync($"");
+                await httpClient.PostAsync($"https://localhost:7294/Platform/Platform-details", jsonContent);
 
-                var result = bool.Parse(await response.Content.ReadAsStringAsync());
+                //Обновление пикета у платформы, если Id пустое
+                if (updateWarehouseModel.PicketId is not null)
+                {
+                    using StringContent jsonContent2 = new(
+                    JsonSerializer.Serialize(new UpdatePicketInput
+                    {
+                        
+                    }), Encoding.UTF8, "application/json");
 
-                return result;
+                    await httpClient.PostAsync($"https://localhost:7294/Picket/Picket-details", jsonContent2);
+                }
+                return true;
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
 

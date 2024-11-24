@@ -2,22 +2,27 @@
 @using Domain.Model.Models.Input
 @using Domain.Model.Models.Output
 @using Model
+@using Web.Services
 
 @inject DialogService DialogService
+@inject WarehouseService WarehouseService
 
 <main>
 
 <div class="buttonCreate">
-        <EditForm FormName="Добавление пикета" Model="@updateWarehouseModel" OnSubmit="UpdatePlatform">
+        <EditForm FormName="Обновление склада" Model="@updateWarehouseModel" OnSubmit="UpdatePlatform">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-group">
                 <RadzenLabel>Платформа</RadzenLabel>
-                <RadzenDropDown @bind-Value="updateWarehouseModel.PlatformID" Data="Warehouses.SelectMany(x=>x.Platforms.Select(x=>x.Number))" Style="width: 100%;" />
+                <RadzenDropDown  Placeholder="Опция" @bind-Value="updateWarehouseModel.PlatformID" Data="Warehouses.SelectMany(x=>x.Platforms.Select(x=>x.Number))" Style="width: 100%;" />
 
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Груз на площадке(т)</RadzenText>
                 <RadzenNumeric @bind-Value="updateWarehouseModel.Cargo" aria-label="Default TextBox" />
+
+                <RadzenLabel style="margin-top:70px; float:left">Пикет</RadzenLabel>
+                <RadzenDropDown @bind-Value="updateWarehouseModel.PicketId" Data="Warehouses.SelectMany(x=>x.Platforms.SelectMany(x=>x.Pickets.Select(x=>x.Number)))" Style="width: 100%;" />
             </div>
 
             <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
@@ -30,19 +35,13 @@
     [Parameter]
     public IEnumerable<WarehouseOutput> Warehouses { get; set; }
 
+
     private UpdateWarehouseModel updateWarehouseModel = new();
 
     private async Task UpdatePlatform()
     {
+        await WarehouseService.UpdateWarehouseAsync(updateWarehouseModel);
 
-        try
-        {
-            
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
     }
     private void CloseDialog()
     {
