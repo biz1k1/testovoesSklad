@@ -1,5 +1,6 @@
 ﻿using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
+using Domain.Model.Models.Output.Picket;
 
 namespace Application.Service.Abstraction.Picket
 {
@@ -31,6 +32,13 @@ namespace Application.Service.Abstraction.Picket
 		/// <param name="picketId"></param>
 		/// <returns></returns>
 		Task<bool> DeleletePicketAsync(int picketId);
+
+        /// <summary>
+        /// Метод объединяет пикеты в одну площадку
+        /// </summary>
+        /// <param name="mergePicketOutput">Входная модель для объединения</param>
+        /// <returns></returns>
+        Task<bool> MergePicketIntoPlatform(MergePicketOutput mergePicketOutput);
 
     }
 }

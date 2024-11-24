@@ -6,6 +6,7 @@ using Domain.Model.Models.Input;
 using Microsoft.Extensions.Logging;
 using Application.Exceptions;
 using Application.Abstraction.Repositories.Platform;
+using Domain.Model.Models.Output.Picket;
 
 
 namespace Application.Service.Services.Picket
@@ -82,6 +83,22 @@ namespace Application.Service.Services.Picket
                 var result = await _picketRepository.DeletePicketAsync(picketId);
 
 				return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw new ServiceException(ex.Message);
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> MergePicketIntoPlatform(MergePicketOutput mergePicketOutput)
+		{
+            try
+            {
+                var result = await _picketRepository.MergePicketIntoPlatform(mergePicketOutput);
+
+                return result;
             }
             catch (Exception ex)
             {

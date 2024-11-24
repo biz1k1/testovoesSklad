@@ -10,7 +10,7 @@
         /// <summary>
         /// Номер Площадки
         /// </summary>
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         /// <summary>
         /// Груз на площадке(т)

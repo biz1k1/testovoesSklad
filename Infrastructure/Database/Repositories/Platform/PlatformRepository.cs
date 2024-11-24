@@ -30,7 +30,7 @@ namespace Infrastructure.Database.Repositories.Platform
 				OrderByDescending(x => x.Id)
 				.FirstOrDefault();
 
-			var newId = lastPlatformeId != null ? lastPlatformeId.Id + 1 : 1;
+			var newId = (lastPlatformeId != null ? lastPlatformeId.Id + 1 : 1).ToString();
 
 			var platform = new PlatformEntity
 			{
@@ -101,6 +101,8 @@ namespace Infrastructure.Database.Repositories.Platform
 
             return true;
         }
+
+		
         #endregion
     }
 }

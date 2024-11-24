@@ -2,7 +2,7 @@
 {
 	public class NotFoundPicketException:InvalidOperationException
 	{
-		public NotFoundPicketException(int picketId) : base($"Пикет с Id: {picketId} не найден!")
+		public NotFoundPicketException() : base($"Пикет/ы не найден/ы!")
 		{
 		}
 	}

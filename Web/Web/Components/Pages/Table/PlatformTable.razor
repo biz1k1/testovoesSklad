@@ -5,11 +5,6 @@
 @using Web.Components.Pages.Input.Dialog.Edit
 @using Web.Services
 
-
-@inject IHttpClientFactory ClientFactory
-@inject DialogService DialogService
-@inject FlattenTreeService FlattenTreeService
-
 <div class="page">
     <main>
         <div class="TableStyle">
@@ -18,11 +13,7 @@
                                 AllowPaging="true" PageSize="5" SelectionMode="DataGridSelectionMode.Single
                             " AllowColumnResize="true" GridLines="DataGridGridLines.Both">
                     <Columns>
-                        <RadzenDataGridColumn Title="Номер склада" Width="80px" TextAlign="TextAlign.Center" >
-                            <Template Context="warehouse">
-                                <RadzenButton ButtonType="ButtonType.Submit" Click="EditWarehouseDialog" Text=@warehouse.WarehouseName ButtonStyle="ButtonStyle.Primary" Disabled="false" />
-                            </Template>
-                        </RadzenDataGridColumn>
+
                         <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
                                 @warehouse.PlatformNumber
@@ -38,7 +29,7 @@
                                 @warehouse.PlatformCargo
                             </Template>
                         </RadzenDataGridColumn>
-                    
+
 
 
                     </Columns>
@@ -48,40 +39,9 @@
         </div>
     </main>
 </div>
-
 @code {
     [Parameter]
-    public IEnumerable<WarehouseOutput>? Warehouses{ get; set;}
+    public IEnumerable<PlatformOutput>? Platforms { get; set; }
 
-    public List<TableRow> tableRow {get;set;}
-
-
-    protected override async Task OnInitializedAsync()
-    {
-
-        tableRow = FlattenTreeService.FlattenTree(Warehouses);
-
-    }
-
-    private async Task EditWarehouseDialog()
-    {
-        var parametrs = new Dictionary<string, object>() { { "Warehouses", Warehouses } };
-        var options = new Radzen.DialogOptions() { Width = "350px", Height = "350px" };
-        await DialogService.OpenAsync<WarehouseEditDialog>("Обновление склада", parametrs, options);
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (Warehouses is null)
-        {
-            // Ожидание пока параметр не будет задан
-            while (Warehouses is null)
-            {
-                await Task.Delay(100); 
-            }
-        }
-
-        await base.OnParametersSetAsync();
-    }
-
+    public List<TableRow> tableRow { get; set; }
 }

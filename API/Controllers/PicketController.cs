@@ -2,6 +2,7 @@
 using Application.Validation;
 using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
+using Domain.Model.Models.Output.Picket;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -84,6 +85,22 @@ namespace Web.Controllers
             var result= await _picketService.DeleletePicketAsync(picketId);
 
 			return result;
+        }
+
+		[HttpPut]
+		[Route("Picket-Merge")]
+		public async Task<IActionResult> MergePicketIntoPlatform([FromBody] MergePicketOutput mergePicketOutput)
+		{
+
+            var validationResult = await new PicketMergeValidator().ValidateAsync(mergePicketOutput);
+
+            if (!validationResult.IsValid)
+            {
+                return ValidationProblem(BehaviorException.AddToModelState(validationResult));
+            }
+            var result = await _picketService.MergePicketIntoPlatform(mergePicketOutput);
+
+            return Ok();
         }
     }
 }
