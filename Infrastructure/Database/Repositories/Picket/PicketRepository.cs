@@ -152,7 +152,7 @@ namespace Infrastructure.Database.Repositories.Picket
 			}
 
 			// Сумма всех грузов у платформ пикетов
-			var summaryCargoPlatform = pickets.SelectMany(x => x.Platforms).Select(x => x.Cargo).Sum();
+			var summaryCargoPlatform = pickets.SelectMany(x => x.Platforms).Select(x => x.Cargo).Distinct().Sum();
 
             // Создаем новую площадку
             var lastPicketId = _pgContext.Pickets.
@@ -167,7 +167,7 @@ namespace Infrastructure.Database.Repositories.Picket
 				Cargo = summaryCargoPlatform,
 				WareHouseId = mergePicketOutput.WarehouseId,
 				Pickets = pickets,
-				Date = (DateTime.UtcNow.Date).ToString(),
+				Date = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
 				IsMerge = true
 
 			};
