@@ -35,7 +35,9 @@ namespace Infrastructure.Data
 				.WithMany(q => q.Platforms)
 				.HasForeignKey(x => x.WareHouseId);
 
-			builder.Property(x => x.Number)
+			builder.Property(x=>x.Date)
+                 .HasColumnType("text");
+            builder.Property(x => x.Number)
 				.IsRequired();
 		}
 	}

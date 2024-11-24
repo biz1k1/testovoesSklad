@@ -154,10 +154,16 @@ namespace Infrastructure.Database.Repositories.Picket
 			// Сумма всех грузов у платформ пикетов
 			var summaryCargoPlatform = pickets.SelectMany(x => x.Platforms).Select(x => x.Cargo).Sum();
 
-			// Создаем новую площадку
-			var newPlatform = new PlatformEntity
+            // Создаем новую площадку
+            var lastPicketId = _pgContext.Pickets.
+                OrderByDescending(x => x.Id)
+                .FirstOrDefault();
+
+            var newId = lastPicketId != null ? lastPicketId.Id + 1 : 1;
+
+            var newPlatform = new PlatformEntity
 			{
-				Number = $"{pickets.First().Number}-{pickets.Last().Number}",
+				Number = newId,
 				Cargo = summaryCargoPlatform,
 				WareHouseId = mergePicketOutput.WarehouseId,
 				Pickets = pickets

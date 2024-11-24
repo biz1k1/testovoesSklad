@@ -10,7 +10,7 @@
         /// <summary>
         /// Номер Площадки
         /// </summary>
-        public string Number { get; set; }
+        public int Number { get; set; }
 
         /// <summary>
         /// Груз на площадке(т)
@@ -28,5 +28,15 @@
         public WareHouseEntity WareHouse { get; set; } 
 
         public ICollection<PicketEntity> Pickets { get; set; } = [];
+
+        /// <summary>
+        /// Дата создания площадки
+        /// </summary>
+        public string Date { get; set; }
+
+        /// <summary>
+        /// Объединенная площадка это или нет
+        /// </summary>
+        public bool IsMerge { get; set; }
     }
 }

@@ -30,13 +30,16 @@ namespace Infrastructure.Database.Repositories.Platform
 				OrderByDescending(x => x.Id)
 				.FirstOrDefault();
 
-			var newId = (lastPlatformeId != null ? lastPlatformeId.Id + 1 : 1).ToString();
+			var newId = (lastPlatformeId != null ? lastPlatformeId.Id + 1 : 1);
 
 			var platform = new PlatformEntity
 			{
 				Number = newId,
 				WareHouseId = platformInput.WarehouseId,
-				Cargo = platformInput.Cargo
+				Cargo = platformInput.Cargo,
+				Date = DateTime.UtcNow.Date.ToString()
+
+
 			};
 
 			await _pgContext.Platforms.AddAsync(platform);

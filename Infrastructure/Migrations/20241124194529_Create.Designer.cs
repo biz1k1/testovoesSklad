@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PgContext))]
-    [Migration("20241117092910_Create")]
+    [Migration("20241124194529_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -51,6 +51,13 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Cargo")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsMerge")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
@@ -83,10 +90,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("PlatformsPickets", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PicketsId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.Property<int>("PlatformsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PicketsId", "PlatformsId");
+
+                    b.HasIndex("PlatformsId");
 
                     b.ToTable("PlatformsPickets");
                 });
@@ -106,17 +118,15 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entity.Entitys.PicketEntity", null)
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("PicketsId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Picket_Id");
+                        .IsRequired();
 
                     b.HasOne("Domain.Entity.Entitys.PlatformEntity", null)
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("PlatformsId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Platform_Id");
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entity.Entitys.WareHouseEntity", b =>

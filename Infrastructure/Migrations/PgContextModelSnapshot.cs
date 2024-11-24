@@ -48,9 +48,15 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Cargo")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("Number")
+                    b.Property<string>("Date")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsMerge")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
 
                     b.Property<int>("WareHouseId")
                         .HasColumnType("integer");

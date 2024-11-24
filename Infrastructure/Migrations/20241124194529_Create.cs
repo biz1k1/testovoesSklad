@@ -45,7 +45,9 @@ namespace Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Number = table.Column<int>(type: "integer", nullable: false),
                     Cargo = table.Column<double>(type: "double precision", nullable: false),
-                    WareHouseId = table.Column<int>(type: "integer", nullable: false)
+                    WareHouseId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<string>(type: "text", nullable: false),
+                    IsMerge = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,20 +64,21 @@ namespace Infrastructure.Migrations
                 name: "PlatformsPickets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    PicketsId = table.Column<int>(type: "integer", nullable: false),
+                    PlatformsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlatformsPickets", x => x.Id);
+                    table.PrimaryKey("PK_PlatformsPickets", x => new { x.PicketsId, x.PlatformsId });
                     table.ForeignKey(
-                        name: "FK_Picket_Id",
-                        column: x => x.Id,
+                        name: "FK_PlatformsPickets_Pickets_PicketsId",
+                        column: x => x.PicketsId,
                         principalTable: "Pickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Platform_Id",
-                        column: x => x.Id,
+                        name: "FK_PlatformsPickets_Platforms_PlatformsId",
+                        column: x => x.PlatformsId,
                         principalTable: "Platforms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -85,6 +88,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Platforms_WareHouseId",
                 table: "Platforms",
                 column: "WareHouseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlatformsPickets_PlatformsId",
+                table: "PlatformsPickets",
+                column: "PlatformsId");
         }
 
         /// <inheritdoc />
