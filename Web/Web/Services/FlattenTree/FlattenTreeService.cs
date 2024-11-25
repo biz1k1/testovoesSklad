@@ -56,7 +56,6 @@ namespace Web.Services
                     }
                 }
             }
-
             return result;
         }
         public List<TableRowPlatform> FlattenTreePlatform(IEnumerable<PlatformOutput> Platforms)

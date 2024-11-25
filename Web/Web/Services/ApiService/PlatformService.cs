@@ -1,7 +1,8 @@
 ﻿using Domain.Model.Models.Input;
 using Domain.Model.Models.Output;
-using System.Text.Json;
+using System;
 using System.Text;
+using System.Text.Json;
 using Web.Model;
 
 namespace Web.Services
@@ -10,9 +11,12 @@ namespace Web.Services
     {
 
         private IHttpClientFactory _httpClientFactory;
-        public PlatformService(IHttpClientFactory httpClientFactory)
+        private readonly ILogger<WarehouseService> _logger;
+        public PlatformService(IHttpClientFactory httpClientFactory,
+            ILogger<WarehouseService> logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
         private HttpClient CreateClient()
         {
@@ -22,13 +26,21 @@ namespace Web.Services
         public async Task<IEnumerable<PlatformOutput>> GetPlatformAsync()
         {
             var httpClient = CreateClient();
+            try
+            {
+                var result = await httpClient.GetFromJsonAsync<IEnumerable<PlatformOutput>>("https://localhost:7294/Platform/platform-lists");
+                return result;
 
-            var result = await httpClient.GetFromJsonAsync<IEnumerable<PlatformOutput>>("https://localhost:7294/Platform/platform-lists");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
 
-            return result;
+                throw new Exception();
+            }
         }
 
-        public async Task AddPlatform(CreatePlatformModel model,int warehouseId)
+        public async Task AddPlatform(CreatePlatformModel model, int warehouseId)
         {
             var httpClient = CreateClient();
 
@@ -48,7 +60,9 @@ namespace Web.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, ex.Message);
+
+                throw new Exception();
             }
 
         }
@@ -66,9 +80,9 @@ namespace Web.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, ex.Message);
 
-                return false;
+                throw new Exception();
             }
 
         }

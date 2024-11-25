@@ -14,33 +14,19 @@
     <main>
         <div class="TableStyle">
             <div class="table-sizes">
-                <RadzenDataGrid Data="@tableRow" ColumnWidth="100px" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced"
+                <RadzenDataGrid Data="@tableRow" ColumnWidth="100px" AllowSorting="true"
                                 AllowPaging="true" PageSize="5" SelectionMode="DataGridSelectionMode.Single
                             " AllowColumnResize="true" GridLines="DataGridGridLines.Both">
                     <Columns>
-                        <RadzenDataGridColumn Title="Номер склада" Width="80px" TextAlign="TextAlign.Center" >
+                        <RadzenDataGridColumn Property="@nameof(TableRowWarehouse.WarehouseName)" Title="Номер склада" Width="80px" TextAlign="TextAlign.Center">
                             <Template Context="warehouse">
                                 <RadzenButton ButtonType="ButtonType.Submit" Click="EditWarehouseDialog" Text=@warehouse.WarehouseName ButtonStyle="ButtonStyle.Primary" Disabled="false" />
                             </Template>
                         </RadzenDataGridColumn>
-                        <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="warehouse">
-                                @warehouse.PlatformNumber
-                            </Template>
-                        </RadzenDataGridColumn>
-                        <RadzenDataGridColumn Title="Номер пикета" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="warehouse">
-                                @warehouse.PicketNumber
-                            </Template>
-                        </RadzenDataGridColumn>
-                        <RadzenDataGridColumn Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="warehouse">
-                                @warehouse.PlatformCargo
-                            </Template>
-                        </RadzenDataGridColumn>
-                    
-
-
+                        <RadzenDataGridColumn Property="@nameof(TableRowWarehouse.PlatformNumber)" Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center" />
+                        <RadzenDataGridColumn Property="@nameof(TableRowWarehouse.PicketNumber)" Title="Номер пикета" Width="80px" TextAlign="TextAlign.Center" />
+                        <RadzenDataGridColumn Property="@nameof(TableRowWarehouse.PlatformCargo)" Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center"/>
+                 
                     </Columns>
 
                 </RadzenDataGrid>
@@ -56,11 +42,9 @@
     public List<TableRowWarehouse> tableRow {get;set;}
 
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-
         tableRow = FlattenTreeService.FlattenTreeWarehouse(Warehouses);
-
     }
 
     private async Task EditWarehouseDialog()

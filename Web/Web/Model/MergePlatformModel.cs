@@ -1,12 +1,6 @@
-﻿using System;
-using System.Linq;
-
-namespace Domain.Model.Models.Output.Picket
+﻿namespace Web.Model
 {
-    /// <summary>
-    /// Входная модель для объединения пикетов в площадки
-    /// </summary>
-    public class MergePicketOutput
+    public class MergePlatformModel
     {
         /// <summary>
         /// Id склада

@@ -1,20 +1,20 @@
-﻿using Domain.Model.Models.Input;
-using Domain.Model.Models.Output;
-using System.Reflection;
+﻿using Domain.Model.Models.Output;
 using System.Text.Json;
 using System.Text;
-using System.Collections.Generic;
-using System.Net.Http;
-using System;
+using Web.Model;
 
 namespace Web.Services
 {
     public class PicketService
     {
         private IHttpClientFactory _httpClientFactory;
-        public PicketService(IHttpClientFactory httpClientFactory)
+        private readonly ILogger<WarehouseService> _logger;
+        public PicketService(IHttpClientFactory httpClientFactory,
+             ILogger<WarehouseService> logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
+
         }
         private HttpClient CreateClient()
         {
@@ -24,10 +24,19 @@ namespace Web.Services
         public async Task<IEnumerable<PicketOutput>> GetPicketsAsync()
         {
             var httpClient = CreateClient();
+            try
+            {
+                var result = await httpClient.GetFromJsonAsync<IEnumerable<PicketOutput>>("https://localhost:7294/Picket/picket-lists");
 
-            var result = await httpClient.GetFromJsonAsync<IEnumerable<PicketOutput>>("https://localhost:7294/Picket/picket-lists");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
 
-            return result;
+                throw new Exception();
+            }
+
         }
         public async Task AddPicket(int platformId)
         {
@@ -39,7 +48,9 @@ namespace Web.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, ex.Message);
+
+                throw new Exception();
             }
         }
 
@@ -48,7 +59,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var response=await httpClient.DeleteAsync($"https://localhost:7294/Picket/picket-delete?picketId={picketId}");
+                var response = await httpClient.DeleteAsync($"https://localhost:7294/Picket/picket-delete?picketId={picketId}");
 
                 var result = bool.Parse(await response.Content.ReadAsStringAsync());
 
@@ -56,10 +67,37 @@ namespace Web.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false;
+                _logger.LogError(ex, ex.Message);
+
+                throw new Exception();
             }
 
+        }
+        public async Task<bool> MergePicketAsync(MergePlatformModel mergePlatformModel)
+        {
+            var httpClient = CreateClient();
+
+            using StringContent jsonContent = new(
+            JsonSerializer.Serialize(new MergePlatformModel
+            {
+                WarehouseId = mergePlatformModel.WarehouseId,
+                picketIds = mergePlatformModel.picketIds
+            }),
+            Encoding.UTF8,
+            "application/json");
+
+            try
+            {
+                await httpClient.PutAsync($"https://localhost:7294/Picket/Picket-Merge", jsonContent);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+
+                throw new Exception();
+            }
         }
     }
 }

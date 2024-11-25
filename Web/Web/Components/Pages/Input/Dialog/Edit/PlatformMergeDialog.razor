@@ -1,0 +1,54 @@
+﻿@rendermode InteractiveAuto
+@using Domain.Model.Models.Input
+@using Domain.Model.Models.Output
+@using Model
+@using Web.Services
+
+@inject DialogService DialogService
+@inject PicketService PicketService
+
+<main>
+
+<div>
+        <EditForm FormName="Обновление склада" Model="@mergePlatformModel" OnSubmit="MergePlatform">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <RadzenLabel>Склад пикетов</RadzenLabel>
+                <RadzenDropDown Placeholder="Выберите номер склада" @bind-Value="mergePlatformModel.WarehouseId" Data=@Platforms ValueProperty="@nameof(PlatformOutput.WareHouseId)" TextProperty="@nameof(PlatformOutput.WareHouseId)" Style="width: 100%;" />
+
+                <RadzenLabel Text="Пикеты для объединения" Component="DropDownMultipleChips" />
+                <RadzenDropDown @bind-Value=@mergePlatformModel.picketIds Data=@pickets TextProperty="@nameof(PicketOutput.Number)" ValueProperty="@nameof(PicketOutput.Id)" Name="DropDownMultipleChips"
+                                Multiple=true AllowClear=true Placeholder="Выберите пикеты" Chips=true Style="width: 100%; max-width: 400px;" />
+            </div>
+
+            <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
+            <RadzenButton class="button-form-cancel" ButtonType="ButtonType.Button" Click="CloseDialog">Закрыть</RadzenButton>
+        </EditForm>
+</div>
+</main>
+
+@code {
+    [Parameter]
+    public IEnumerable<PlatformOutput> Platforms { get; set; }
+
+    private IEnumerable<PicketOutput> pickets;
+    IList<int> values = new int[] { };
+
+    private MergePlatformModel mergePlatformModel = new();
+
+    protected override void OnInitialized()
+    {
+        pickets = Platforms.SelectMany(x => x.Pickets);
+    }
+    private async Task MergePlatform()
+    {
+        await PicketService.MergePicketAsync(mergePlatformModel);
+    }
+    private void CloseDialog()
+    {
+        DialogService.Close();
+    }
+
+}

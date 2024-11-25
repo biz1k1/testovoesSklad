@@ -3,6 +3,7 @@
 @inherits LayoutComponentBase
 @using Model;
 @using Web.Components.Pages.Input.Dialog.Edit
+@using Web.Components.Pages.Input.Button.Edit
 @using Web.Services
 @inject PlatformService PlatformService
 @inject FlattenTreeService FlattenTreeService
@@ -12,26 +13,16 @@
     <main>
         <div class="TableStyle">
             <div class="table-sizes">
-                <RadzenDataGrid Data="@tableRow" ColumnWidth="100px" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" FilterMode="FilterMode.Advanced"
+                <RadzenDataGrid Data="@tableRow" ColumnWidth="100px" AllowSorting="true"
                                 AllowPaging="true" PageSize="5" SelectionMode="DataGridSelectionMode.Single
-                            " AllowColumnResize="true" GridLines="DataGridGridLines.Both">
+                            "AllowColumnResize="true" GridLines="DataGridGridLines.Both">
                     <Columns>
 
-                        <RadzenDataGridColumn Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="platform">
-                                @platform.PlatformNumber
-                            </Template>
-                        </RadzenDataGridColumn>
-                        <RadzenDataGridColumn Title="Дата объединения площадки" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="platform">
-                                @platform.Date
-                            </Template>
-                        </RadzenDataGridColumn>
-                        <RadzenDataGridColumn Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center">
-                            <Template Context="platform">
-                                @platform.PlatformCargo
-                            </Template>
-                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn Property="@nameof(TableRowPlatform.PlatformNumber)" Title="Номер площадки" Width="80px" TextAlign="TextAlign.Center" />
+
+                        <RadzenDataGridColumn Property="@nameof(TableRowPlatform.Date)" Title="Дата объединения площадки" Width="80px" TextAlign="TextAlign.Center" />
+
+                        <RadzenDataGridColumn Property="@nameof(TableRowPlatform.PlatformCargo)" Title="Груз на площадке(т)" Width="80px" TextAlign="TextAlign.Center" />
 
 
 
@@ -40,6 +31,7 @@
                 </RadzenDataGrid>
             </div>
         </div>
+        <MergePlatformButton Platforms="platforms"/>
     </main>
 </div>
 @code {
@@ -47,6 +39,7 @@
     private IEnumerable<PlatformOutput>? platforms;
 
     public List<TableRowPlatform> tableRow { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         platforms = await PlatformService.GetPlatformAsync();

@@ -1,9 +1,7 @@
 ﻿using Domain.Model.Models.Input;
 using Domain.Model.Models.Output;
-using System.Net.Http.Json;
-using System.Reflection;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using Web.Model;
 
 namespace Web.Services
@@ -46,13 +44,13 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var response=await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse", null);
+                var response = await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse", null);
 
                 var result = bool.Parse(await response.Content.ReadAsStringAsync());
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 _logger.LogError(ex, ex.Message);
@@ -89,8 +87,8 @@ namespace Web.Services
             JsonSerializer.Serialize(new UpdatePlatformInput
             {
                 WarehouseId = updateWarehouseModel.WarehouseId,
-                PlatformId=updateWarehouseModel.PlatformID,
-                Cargo=updateWarehouseModel.Cargo
+                PlatformId = updateWarehouseModel.PlatformID,
+                Cargo = updateWarehouseModel.Cargo
             }),
             Encoding.UTF8,
             "application/json");
@@ -105,14 +103,14 @@ namespace Web.Services
                     using StringContent jsonContent2 = new(
                     JsonSerializer.Serialize(new UpdatePicketInput
                     {
-                        
+
                     }), Encoding.UTF8, "application/json");
 
                     await httpClient.PostAsync($"https://localhost:7294/Picket/Picket-details", jsonContent2);
                 }
                 return true;
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
 
