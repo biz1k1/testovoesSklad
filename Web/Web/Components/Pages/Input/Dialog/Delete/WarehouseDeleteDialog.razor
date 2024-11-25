@@ -32,6 +32,8 @@
         var warehouse = Warehouses.Where(x => x.Name == warehouseName).FirstOrDefault();
 
         await WarehouseService.DeleteWarehouseAsync(warehouse.Id);
+
+        DialogService.Close();
     }
     private void CloseDialog()
     {

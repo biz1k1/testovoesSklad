@@ -43,6 +43,8 @@
         var warehouse = Warehouses.Where(x=>x.Name==platformModel.WarehouseName).FirstOrDefault();
 
         await PlatformService.AddPlatform(platformModel, warehouse.Id);
+
+        DialogService.Close();
     }
 
     private void CloseDialog()

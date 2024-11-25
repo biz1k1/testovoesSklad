@@ -45,11 +45,14 @@
         platforms = Warehouses.SelectMany(x => x.Platforms);
 
         pickets = platforms.SelectMany(x => x.Pickets);
+
     }
 
     private async Task UpdatePlatform()
     {
         await WarehouseService.UpdateWarehouseAsync(updateWarehouseModel);
+
+        DialogService.Close();
 
     }
     private void CloseDialog()

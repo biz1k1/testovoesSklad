@@ -38,6 +38,8 @@
         var platform = Platforms.Where(x => x.Number ==platformNumber).FirstOrDefault();
 
         await PicketService.AddPicket(platform.Id);
+
+        DialogService.Close();
     }
     private void CloseDialog()
     {

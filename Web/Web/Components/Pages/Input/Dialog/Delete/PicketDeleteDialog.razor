@@ -32,6 +32,8 @@
         var picket = Pickets.Where(x => x.Number == picketNumber).FirstOrDefault();
 
         await PicketService.DeletePicketAsync(picket.Id);
+
+        DialogService.Close();
     }
     private void CloseDialog()
     {

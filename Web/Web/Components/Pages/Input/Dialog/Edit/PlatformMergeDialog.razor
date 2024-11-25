@@ -45,6 +45,8 @@
     private async Task MergePlatform()
     {
         await PicketService.MergePicketAsync(mergePlatformModel);
+
+        DialogService.Close();
     }
     private void CloseDialog()
     {

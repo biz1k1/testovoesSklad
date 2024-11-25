@@ -32,6 +32,8 @@
         var platform = Platforms.Where(x => x.Number == platformNumber).FirstOrDefault();
 
         await PlatformService.DeletePlatformAsync(platform.Id);
+
+        DialogService.Close();
     }
     private void CloseDialog()
     {
