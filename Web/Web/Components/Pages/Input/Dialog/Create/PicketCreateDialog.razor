@@ -12,13 +12,13 @@
 <main>
 
     <div class="page">
-        <EditForm FormName="Добавление пикета" Model="@platformNumber" OnSubmit="UpdatePlatform">
+        <EditForm FormName="Добавление пикета" Model="@platformId" OnSubmit="UpdatePlatform">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-group">
                 <label>Выберите платформу, который привяжется пикет:</label>
-                <RadzenDropDown @bind-Value="platformNumber" Data="Platforms.Select(x=>x.Number)" Style="width: 100%;" />
+                <RadzenDropDown Placeholder="Номер пикета" @bind-Value="platformId" Data=@Platforms ValueProperty="@nameof(PlatformOutput.Id)" TextProperty="@nameof(PlatformOutput.Number)" Style="width: 100%;" />
             </div>
 
             <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
@@ -30,14 +30,12 @@
 @code {
     [Parameter]
     public IEnumerable<PlatformOutput>? Platforms { get; set; }
-    private int platformNumber;
+
+    private int platformId;
 
     private async Task UpdatePlatform()
     {
-
-        var platform = Platforms.Where(x => x.Number ==platformNumber).FirstOrDefault();
-
-        await PicketService.AddPicket(platform.Id);
+        await PicketService.AddPicket(platformId);
 
         DialogService.Close();
     }

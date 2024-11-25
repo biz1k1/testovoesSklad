@@ -42,6 +42,7 @@
     {
         pickets = Platforms.SelectMany(x => x.Pickets);
     }
+
     private async Task MergePlatform()
     {
         await PicketService.MergePicketAsync(mergePlatformModel);

@@ -2,7 +2,7 @@
 {
     public class CreatePlatformModel
     {
-        public string WarehouseName { get; set; }
+        public int WarehouseId { get; set; }
         public double Cargo { get; set; }
     }
 }

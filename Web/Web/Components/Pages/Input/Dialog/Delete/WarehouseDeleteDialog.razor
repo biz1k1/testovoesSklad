@@ -6,13 +6,14 @@
 <main>
 
     <div>
-        <EditForm FormName="Добавление пикета" Model="@warehouseName" OnSubmit="UpdatePlatform">
+        <EditForm FormName="Удаление склада" Model="@WarehouseId" OnSubmit="UpdatePlatform">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-group">
                 <label>Выберите платформу, который привяжется пикет:</label>
-                <RadzenDropDown @bind-Value="warehouseName" Data="Warehouses.Select(x=>x.Name)" Style="width: 100%;" />
+                <RadzenDropDown Placeholder="Номер склада" @bind-Value=WarehouseId Data="Warehouses" Style="width: 100%;" 
+                    ValueProperty="@nameof(WarehouseOutput.Id)" TextProperty="@nameof(WarehouseOutput.Name)" />
             </div>
 
             <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
@@ -24,14 +25,12 @@
 @code {
     [Parameter]
     public IEnumerable<WarehouseOutput>? Warehouses { get; set; }
-    private string warehouseName="Номер склада";
+    private int WarehouseId;
 
     private async Task UpdatePlatform()
     {
 
-        var warehouse = Warehouses.Where(x => x.Name == warehouseName).FirstOrDefault();
-
-        await WarehouseService.DeleteWarehouseAsync(warehouse.Id);
+        await WarehouseService.DeleteWarehouseAsync(WarehouseId);
 
         DialogService.Close();
     }

@@ -19,7 +19,7 @@
                 <RadzenDropDown  Placeholder="Номер площадки" @bind-Value="updateWarehouseModel.PlatformID" Data=@platforms ValueProperty="@nameof(PlatformOutput.Id)" TextProperty="@nameof(PlatformOutput.Number)"  Style="width: 100%;" />
 
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Груз на площадке(т)</RadzenText>
-                <RadzenNumeric Placeholder="Номер пикета" @bind-Value="updateWarehouseModel.Cargo"  aria-label="Default TextBox" />
+                <RadzenNumeric Placeholder="Груз(т)" @bind-Value="updateWarehouseModel.Cargo"  aria-label="Default TextBox" />
 
                 <RadzenLabel style="margin-top:70px; float:left">Пикет</RadzenLabel>
                 <RadzenDropDown Placeholder="Номер пикета" @bind-Value="updateWarehouseModel.PicketId" Data=@pickets ValueProperty="@nameof(PicketOutput.Id)" TextProperty="@nameof(PicketOutput.Number)" Style="width: 100%;" />

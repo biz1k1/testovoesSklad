@@ -40,7 +40,7 @@ namespace Web.Services
             }
         }
 
-        public async Task AddPlatform(CreatePlatformModel model, int warehouseId)
+        public async Task AddPlatform(CreatePlatformModel model)
         {
             var httpClient = CreateClient();
 
@@ -48,7 +48,7 @@ namespace Web.Services
             using StringContent jsonContent = new(
             JsonSerializer.Serialize(new AddPlatformInput
             {
-                WarehouseId = warehouseId,
+                WarehouseId = model.WarehouseId,
                 Cargo = model.Cargo
             }),
             Encoding.UTF8,

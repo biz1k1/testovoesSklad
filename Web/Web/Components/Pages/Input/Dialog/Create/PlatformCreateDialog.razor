@@ -18,10 +18,11 @@
 
             <div class="form-group">
                 <label>Выберите склад, который привяжется к площадке:</label>
-                <RadzenDropDown Placeholder="Выберите платформу" @bind-Value="platformModel.WarehouseName" Data="Warehouses.Select(x=>x.Name)" Style="width: 100%;" />
+                <RadzenDropDown Placeholder="Выберите платформу" @bind-Value="platformModel.WarehouseId" Data=Warehouses
+                                TextProperty="@nameof(WarehouseOutput.Name)" ValueProperty="@nameof(WarehouseOutput.Id)" Style="width: 100%;" />
 
                 <RadzenText  TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Груз на площадке(т)</RadzenText>
-                <RadzenNumeric Placeholder="" @bind-Value="platformModel.Cargo" aria-label="Default TextBox" />
+                <RadzenNumeric Placeholder="Номер платформы" @bind-Value="platformModel.Cargo" aria-label="Default TextBox" />
 
             </div>
 
@@ -37,12 +38,11 @@
 
     private CreatePlatformModel platformModel=new();
 
+
     private async Task UpdatePlatform()
     {
 
-        var warehouse = Warehouses.Where(x=>x.Name==platformModel.WarehouseName).FirstOrDefault();
-
-        await PlatformService.AddPlatform(platformModel, warehouse.Id);
+        await PlatformService.AddPlatform(platformModel);
 
         DialogService.Close();
     }

@@ -6,13 +6,14 @@
 <main>
 
     <div>
-        <EditForm FormName="Удаление пикета пикета" Model="@picketNumber" OnSubmit="UpdatePlatform">
+        <EditForm FormName="Удаление пикета" Model="@picketId" OnSubmit="UpdatePlatform">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
             <div class="form-group">
                 <label>Выберите платформу, который привяжется пикет:</label>
-                <RadzenDropDown @bind-Value="picketNumber" Data="Pickets.Select(x=>x.Number)" Style="width: 100%;" />
+                <RadzenDropDown Placeholder="Номер пикета" @bind-Value="picketId" Data="Pickets" Style="width: 100%;"
+                                TextProperty="@nameof(PicketOutput.Number)" ValueProperty="@nameof(PicketOutput.Id)" />
             </div>
 
             <RadzenButton class="button-form-save" ButtonType="ButtonType.Submit">Сохранить</RadzenButton>
@@ -24,14 +25,12 @@
 @code {
     [Parameter]
     public IEnumerable<PicketOutput>? Pickets { get; set; }
-    private int picketNumber;
+    private int picketId;
 
     private async Task UpdatePlatform()
     {
 
-        var picket = Pickets.Where(x => x.Number == picketNumber).FirstOrDefault();
-
-        await PicketService.DeletePicketAsync(picket.Id);
+        await PicketService.DeletePicketAsync(picketId);
 
         DialogService.Close();
     }
