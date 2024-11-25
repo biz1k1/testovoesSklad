@@ -10,17 +10,12 @@
 @layout Web.Components.Layout.MainLayout
 
 
-@* 
-    Сломались css Стили, почему-то перестали применятся
-    Пришлось стили так прописывать
-*@
+
 <WarehouseTable Warehouses="warehouses" />
 <div >
     <CreateWarehouseButton/>
     <CreatePlatformButton Warehouses="@warehouses"/>
     <CreatePicketButton Platforms="platforms"/>
-</div>
-<div >
     <DeleteWarehouseButton Warehouses="warehouses" /> 
     <DeletePlatformButton Platforms="platforms"/>
     <DeletePicketButton Pickets="pickets"/>

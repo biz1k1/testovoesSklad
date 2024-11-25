@@ -1,13 +1,14 @@
 ﻿.buttonCreate {
     margin-right:475px;
-    margin-top:30px;
+    margin-top:50px;
     margin-left:300px;
+    margin-bottom:30px
 }
 .buttonDelete {
     margin-right: 475px;
-    margin-top: 10px;
-    margin-left: 700px;
-    float: right;
+    margin-top: -65px;
+    margin-left: 900px;
+    margin-bottom:-120px;
 }
 
 .button-form-save {

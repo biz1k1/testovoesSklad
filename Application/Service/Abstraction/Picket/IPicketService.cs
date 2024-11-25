@@ -39,6 +39,5 @@ namespace Application.Service.Abstraction.Picket
         /// <param name="mergePicketOutput">Входная модель для объединения</param>
         /// <returns></returns>
         Task<bool> MergePicketIntoPlatform(MergePicketOutput mergePicketOutput);
-
     }
 }

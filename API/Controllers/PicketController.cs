@@ -11,7 +11,7 @@ namespace Web.Controllers
     /// Контроллер работы с пикетами
     /// </summary>
     [ApiController]
-    [Route("Picket")]
+    [Route("pickets")]
     public class PicketController : ControllerBase
     {
         private readonly IPicketService _picketService;
@@ -30,7 +30,7 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route(template: "Picket-lists")]
+        [Route(template: "picket-lists")]
         public async Task<IEnumerable<PicketEntity>> GetAllPicketsAsync()
         {
             var result = await _picketService.GetAllPicketsAsync();
@@ -44,7 +44,7 @@ namespace Web.Controllers
         /// <param name="platformId">Id платформы, в который добавится пикет</param>
         /// <returns></returns>
         [HttpPost]
-        [Route(template: "Picket")]
+        [Route("{platformId}")]
         public async Task AddPicketAsync(int platformId)
         {
             await _picketService.AddPicketAsync(platformId);
@@ -56,7 +56,7 @@ namespace Web.Controllers
         /// <param name="picketInput"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("Picket-details")]
+        [Route("picket-details")]
         public async Task<IActionResult> UpdatePicketsAsync([FromBody] UpdatePicketInput picketInput)
         {
             var validationResult = await new PicketAddValidator().ValidateAsync(picketInput);
@@ -77,7 +77,7 @@ namespace Web.Controllers
         /// <param name="picketId">Айди пикета</param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("Picket-delete")]
+        [Route("{picketId}")]
         public async Task<bool> DeletePicketAsync(int picketId)
         {
             var result = await _picketService.DeleletePicketAsync(picketId);
@@ -85,8 +85,13 @@ namespace Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Метод объединяет пикеты в площадку
+        /// </summary>
+        /// <param name="mergePicketOutput"></param>
+        /// <returns></returns>
         [HttpPut]
-        [Route("Picket-Merge")]
+        [Route("merge")]
         public async Task<IActionResult> MergePicketIntoPlatform([FromBody] MergePicketOutput mergePicketOutput)
         {
 

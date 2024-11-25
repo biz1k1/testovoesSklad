@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Domain.Model.Models.Output.Picket
+﻿namespace Domain.Model.Models.Output.Picket
 {
     /// <summary>
     /// Входная модель для объединения пикетов в площадки

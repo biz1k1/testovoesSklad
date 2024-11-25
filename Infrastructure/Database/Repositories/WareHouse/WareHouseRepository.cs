@@ -60,10 +60,11 @@ namespace Infrastructure.Database.Repositories.WareHouse
 
 			var warehousePlatform = warehouse.Platforms.Count();
 
-			if (warehouse is null || warehousePlatform is not 0)
+			if (warehousePlatform is not 0)
 			{
-				return false;
-			}
+				throw new InvalidOperationException();
+
+            }
 
 			_pgContext.WareHouses.Remove(warehouse);
 

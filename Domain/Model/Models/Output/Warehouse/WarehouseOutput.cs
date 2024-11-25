@@ -1,6 +1,4 @@
-﻿
-
-namespace Domain.Model.Models.Output
+﻿namespace Domain.Model.Models.Output
 {
 	/// <summary>
 	/// Клас выходной модели для складов

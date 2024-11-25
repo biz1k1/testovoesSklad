@@ -18,8 +18,5 @@
         /// Груз на площадке (т)
         /// </summary>
         public double? Cargo { get; set; }
-
-
-
 	}
 }

@@ -14,7 +14,7 @@
     <main>
         <div class="TableStyle">
             <div class="table-sizes">
-                <RadzenDataGrid Data="@tableRow" ColumnWidth="100px" AllowSorting="true"
+                <RadzenDataGrid Data="@RowsForTheTable" ColumnWidth="100px" AllowSorting="true"
                                 AllowPaging="true" PageSize="5" SelectionMode="DataGridSelectionMode.Single
                             " AllowColumnResize="true" GridLines="DataGridGridLines.Both">
                     <Columns>
@@ -39,12 +39,12 @@
     [Parameter]
     public IEnumerable<WarehouseOutput>? Warehouses{ get; set;}
 
-    public List<TableRowWarehouse> tableRow {get;set;}
+    public List<TableRowWarehouse> RowsForTheTable { get; set; }
 
 
     protected override void OnInitialized()
     {
-        tableRow = FlattenTreeService.FlattenTreeWarehouse(Warehouses);
+        RowsForTheTable = FlattenTreeService.FlattenTreeWarehouse(Warehouses);
     }
 
     private async Task EditWarehouseDialog()

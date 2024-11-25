@@ -1,5 +1,4 @@
-﻿
-namespace Domain.Model.Models.Output
+﻿namespace Domain.Model.Models.Output
 {
 	/// <summary>
 	/// Класс выходной модели для площадок

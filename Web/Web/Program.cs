@@ -25,7 +25,6 @@ builder.Services.AddScoped<PicketService>();
 
 builder.Services.AddSingleton<StateMessageService>();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

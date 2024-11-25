@@ -5,8 +5,6 @@ using Infrastructure.Database.Repositories.Picket;
 using Infrastructure.Database.Repositories.Platform;
 using Infrastructure.Database.Repositories.WareHouse;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
 
 namespace Infrastructure.Database
 {

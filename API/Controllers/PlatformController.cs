@@ -10,7 +10,7 @@ namespace Web.Controllers
     /// Контроллер работы с площадками
     /// </summary>
     [ApiController]
-    [Route("Platform")]
+    [Route("platforms")]
     public class PlatformController : ControllerBase
     {
         private readonly IPlatformService _platformService;
@@ -30,7 +30,7 @@ namespace Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("Platform-lists")]
+        [Route("platform-lists")]
         public async Task<IEnumerable<PlatformOutput>> GetAllPlatformAsync()
         {
             var result = await _platformService.GetAllPlatformAsync();
@@ -44,7 +44,7 @@ namespace Web.Controllers
         /// <param name="platformInput"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("Platform")]
+        [Route("platform")]
         public async Task<IActionResult> AddPlatformRepositoryAsync([FromBody] AddPlatformInput platformInput)
         {
             var validationResult = await new PlatformAddValidator().ValidateAsync(platformInput);
@@ -64,7 +64,7 @@ namespace Web.Controllers
         /// <param name="updateInput"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("Platform-details")]
+        [Route("platform-details")]
         public async Task<IActionResult> UpdatePlatformAsync([FromBody] UpdatePlatformInput updateInput)
         {
             var validationResult = await new PlatformUpdateValidator().ValidateAsync(updateInput);
@@ -86,7 +86,7 @@ namespace Web.Controllers
         /// <param name="platformId">Айди площадки</param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("Platform-delete")]
+        [Route("{platformId}")]
         public async Task<bool> DeletePicketAsync(int platformId)
         {
             var result = await _platformService.DeletePlatformAsync(platformId);

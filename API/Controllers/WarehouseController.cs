@@ -8,7 +8,7 @@ namespace Web.Controllers
 	/// Контроллер работы со складами
 	/// </summary>
 	[ApiController]
-	[Route("Warehouse")]
+	[Route("warehouses")]
 	public class WarehouseController: ControllerBase
 	{
 		private readonly IWarehouseService _warehouseService;
@@ -27,7 +27,7 @@ namespace Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[Route("Warehouse-list")]
+		[Route("warehouse-list")]
 		public async Task<IEnumerable<WarehouseOutput>> GetWarehouseAsync()
 		{
 			var result = await _warehouseService.GetWarehouseAsync();
@@ -40,7 +40,7 @@ namespace Web.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		[Route("Warehouse")]
+		[Route("warehouse")]
 		public async Task AddWarehouseAsync()
 		{
 			await _warehouseService.AddWarehouseAsync();
@@ -52,7 +52,7 @@ namespace Web.Controllers
         /// <param name="warehouseId">Айди склада</param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("warehouse-delete")]
+        [Route("{warehouseId}")]
         public async Task<bool> DeletePicketAsync(int warehouseId)
         {
             var result = await _warehouseService.DeleteWarehouseAsync(warehouseId);

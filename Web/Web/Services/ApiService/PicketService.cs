@@ -1,6 +1,6 @@
 ﻿using Domain.Model.Models.Output;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using Web.Model;
 
 namespace Web.Services
@@ -26,7 +26,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var result = await httpClient.GetFromJsonAsync<IEnumerable<PicketOutput>>("https://localhost:7294/Picket/picket-lists");
+                var result = await httpClient.GetFromJsonAsync<IEnumerable<PicketOutput>>("https://localhost:7294/pickets/picket-lists");
 
                 return result;
             }
@@ -44,7 +44,7 @@ namespace Web.Services
 
             try
             {
-                await httpClient.PostAsync($"https://localhost:7294/Picket/picket?platformId={platformId}", null);
+                await httpClient.PostAsync($"https://localhost:7294/pickets/{platformId}", null);
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var response = await httpClient.DeleteAsync($"https://localhost:7294/Picket/picket-delete?picketId={picketId}");
+                var response = await httpClient.DeleteAsync($"https://localhost:7294/pickets/{picketId}");
 
                 var result = bool.Parse(await response.Content.ReadAsStringAsync());
 
@@ -77,7 +77,7 @@ namespace Web.Services
         {
             var httpClient = CreateClient();
 
-            using StringContent jsonContent = new(
+            using StringContent platformJson = new(
             JsonSerializer.Serialize(new MergePlatformModel
             {
                 WarehouseId = mergePlatformModel.WarehouseId,
@@ -88,7 +88,7 @@ namespace Web.Services
 
             try
             {
-                await httpClient.PutAsync($"https://localhost:7294/Picket/Picket-Merge", jsonContent);
+                await httpClient.PutAsync($"https://localhost:7294/pickets/merge", platformJson);
 
                 return true;
             }

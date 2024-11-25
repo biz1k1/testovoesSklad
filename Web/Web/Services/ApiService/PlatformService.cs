@@ -1,6 +1,5 @@
 ﻿using Domain.Model.Models.Input;
 using Domain.Model.Models.Output;
-using System;
 using System.Text;
 using System.Text.Json;
 using Web.Model;
@@ -28,7 +27,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var result = await httpClient.GetFromJsonAsync<IEnumerable<PlatformOutput>>("https://localhost:7294/Platform/platform-lists");
+                var result = await httpClient.GetFromJsonAsync<IEnumerable<PlatformOutput>>("https://localhost:7294/platforms/platform-lists");
                 return result;
 
             }
@@ -45,7 +44,7 @@ namespace Web.Services
             var httpClient = CreateClient();
 
 
-            using StringContent jsonContent = new(
+            using StringContent platformJson = new(
             JsonSerializer.Serialize(new AddPlatformInput
             {
                 WarehouseId = model.WarehouseId,
@@ -56,7 +55,7 @@ namespace Web.Services
 
             try
             {
-                await httpClient.PostAsync("https://localhost:7294/Platform/platform", jsonContent);
+                await httpClient.PostAsync("https://localhost:7294/platforms/platform", platformJson);
             }
             catch (Exception ex)
             {
@@ -72,7 +71,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var response = await httpClient.DeleteAsync($"https://localhost:7294/Platform/platform-delete?platformId={platformId}");
+                var response = await httpClient.DeleteAsync($"https://localhost:7294/platforms/{platformId}");
 
                 var result = bool.Parse(await response.Content.ReadAsStringAsync());
 

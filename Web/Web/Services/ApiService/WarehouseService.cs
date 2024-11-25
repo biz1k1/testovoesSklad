@@ -26,13 +26,12 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var result = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/Warehouse/Warehouse-list");
+                var result = await httpClient.GetFromJsonAsync<IEnumerable<WarehouseOutput>>("https://localhost:7294/warehouses/warehouse-list");
 
                 return result;
             }
             catch (Exception ex)
             {
-
                 _logger.LogError(ex, ex.Message);
 
                 throw new Exception();
@@ -44,7 +43,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var response = await httpClient.PostAsync("https://localhost:7294/Warehouse/Warehouse", null);
+                var response = await httpClient.PostAsync("https://localhost:7294/warehouses/warehouse", null);
 
                 var result = bool.Parse(await response.Content.ReadAsStringAsync());
 
@@ -64,7 +63,7 @@ namespace Web.Services
             var httpClient = CreateClient();
             try
             {
-                var response = await httpClient.DeleteAsync($"https://localhost:7294/Warehouse/warehouse-delete?warehouseId={warehouseId}");
+                var response = await httpClient.DeleteAsync($"https://localhost:7294/warehouses/{warehouseId}");
 
                 var result = bool.Parse(await response.Content.ReadAsStringAsync());
 
@@ -83,7 +82,7 @@ namespace Web.Services
         {
             var httpClient = CreateClient();
 
-            using StringContent jsonContent = new(
+            using StringContent warehouseJson = new(
             JsonSerializer.Serialize(new UpdatePlatformInput
             {
                 WarehouseId = updateWarehouseModel.WarehouseId,
@@ -95,18 +94,19 @@ namespace Web.Services
 
             try
             {
-                await httpClient.PostAsync($"https://localhost:7294/Platform/Platform-details", jsonContent);
+                await httpClient.PutAsync($"https://localhost:7294/platforms/platform-details", warehouseJson);
 
-                //Обновление пикета у платформы, если Id пустое
+                //Обновление пикета у платформы, если Id не пустое
                 if (updateWarehouseModel.PicketId is not null)
                 {
-                    using StringContent jsonContent2 = new(
+                    using StringContent picketsJson = new(
                     JsonSerializer.Serialize(new UpdatePicketInput
                     {
-
+                        PicketId=updateWarehouseModel.PicketId,
+                        PlatformId=updateWarehouseModel.PlatformID,
                     }), Encoding.UTF8, "application/json");
 
-                    await httpClient.PostAsync($"https://localhost:7294/Picket/Picket-details", jsonContent2);
+                    await httpClient.PostAsync($"https://localhost:7294/pickets/picket-details", picketsJson);
                 }
                 return true;
             }

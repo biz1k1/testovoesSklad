@@ -5,7 +5,6 @@ using Domain.Model.Models.Input;
 using Domain.Model.Models.Output.Picket;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Infrastructure.Database.Repositories.Picket
 {
@@ -73,7 +72,7 @@ namespace Infrastructure.Database.Repositories.Picket
 
             if (picket is null)
             {
-                return false;
+				throw new NotFoundPicketException();
             }
 
             _pgContext.Pickets.Remove(picket);
@@ -88,15 +87,18 @@ namespace Infrastructure.Database.Repositories.Picket
 		{
 
 			var platform = await _pgContext.Platforms.Where(x => x.Id == updateInput.PlatformId)
-				.FirstOrDefaultAsync(); 
-
-			var picket = await _pgContext.Pickets.Where(x => x.Id == updateInput.PicketId)
+				.FirstOrDefaultAsync();
+            if (platform is null)
+            {
+				throw new NotFoundPlatformException(updateInput.PlatformId);
+            }
+            var picket = await _pgContext.Pickets.Where(x => x.Id == updateInput.PicketId)
 				.Include(x=>x.Platforms).FirstOrDefaultAsync();
 
 			//Если не удалось найти пикет и платформу
-			if(platform is null || picket is null)
+			if(picket is null)
 			{
-				return false;
+				throw new NotFoundPicketException();
 			}
 
 			// Удаление пикета из площадки, в которой он находится и переназначение на другую площадку

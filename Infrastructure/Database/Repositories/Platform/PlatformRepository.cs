@@ -3,8 +3,7 @@ using Domain.Entity.Entitys;
 using Domain.Model.Models.Input;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
+using Application.Exceptions;
 
 namespace Infrastructure.Database.Repositories.Platform
 {
@@ -58,11 +57,15 @@ namespace Infrastructure.Database.Repositories.Platform
             var platform = await _pgContext.Platforms.Where(x => x.Id == platformId)
 				.Include(x => x.Pickets).FirstOrDefaultAsync();
 
+			if(platform is null)
+			{
+				throw new NotFoundPlatformException(platformId);
+			}
             var platformPickets = platform.Pickets.Count();
 
-            if (platform is null || platformPickets is not 0)
+            if (platformPickets is not 0)
             {
-                return false;
+				throw new NotFoundPicketException();
             }
 
 			_pgContext.Platforms.Remove(platform);

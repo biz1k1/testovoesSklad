@@ -22,6 +22,5 @@ namespace Application.Service.Abstraction.Warehouse
 		/// <param name="warehouseId">Айди склада</param>
 		/// <returns></returns>
 		Task<bool> DeleteWarehouseAsync(int warehouseId);
-
     }
 }

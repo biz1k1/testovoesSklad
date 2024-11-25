@@ -5,7 +5,6 @@ namespace Application.Abstraction.Repositories.Platform
 {
 	public interface IPlatformRepository
 	{
-
 		/// <summary>
 		/// Метод получает все существующие площадки
 		/// </summary>

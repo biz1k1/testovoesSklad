@@ -1,5 +1,4 @@
-﻿
-namespace Domain.Model.Models.Input
+﻿namespace Domain.Model.Models.Input
 {
 	/// <summary>
 	/// Входная модель для обновления пикетов
@@ -14,6 +13,6 @@ namespace Domain.Model.Models.Input
 		/// <summary>
 		/// Пикет, который обновятся
 		/// </summary>
-		public int PicketId { get; set; }
+		public int? PicketId { get; set; }
 	}
 }

@@ -24,6 +24,5 @@ namespace Application
 
             return services;
 		}
-
 	}
 }

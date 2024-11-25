@@ -31,6 +31,5 @@ namespace Application.Service.Abstraction.Platform
 		/// <param name="warehouseId">Айди площадки</param>
 		/// <returns></returns>
 		Task<bool> DeletePlatformAsync(int warehouseId);
-
     }
 }
